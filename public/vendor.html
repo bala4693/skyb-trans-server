@@ -1,0 +1,1815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor / Rate Entry - Complete Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .section-heading {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2c5aa0;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #2c5aa0;
+        }
+
+        .subsection-heading {
+            color: #2c5aa0;
+            font-size: 16px;
+            margin: 20px 0 15px 0;
+            font-weight: 600;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 8px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-field label {
+            font-size: 13px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 6px;
+        }
+
+        .form-field select,
+        .form-field input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 13px;
+            background: white;
+        }
+
+        .form-field select:focus,
+        .form-field input:focus {
+            outline: none;
+            border-color: #2c5aa0;
+        }
+
+        .form-field input[readonly] {
+            background: #f5f5f5;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .info-box {
+            background: #f8f9fa;
+            border-left: 4px solid #2c5aa0;
+            padding: 15px;
+            margin: 15px 0;
+            font-size: 13px;
+        }
+
+        .info-box h4 {
+            color: #2c5aa0;
+            margin-bottom: 10px;
+        }
+
+        .info-box ul {
+            margin-left: 20px;
+        }
+
+        .info-box li {
+            margin-bottom: 5px;
+        }
+
+        .add-vehicle-btn {
+            background: #2c5aa0;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .add-vehicle-btn:hover {
+            background: #1e3a70;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            margin-top: 10px;
+        }
+
+        th {
+            background: #2c5aa0;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .vehicle-input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .vehicle-input:focus {
+            outline: none;
+            border-color: #2c5aa0;
+        }
+
+        select.vehicle-input {
+            cursor: pointer;
+            background: white;
+        }
+
+        .remove-btn {
+            background: #dc3545;
+            color: white;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .remove-btn:hover {
+            background: #c82333;
+        }
+
+        .submit-btn {
+            background: #dc3545;
+            color: white;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .remove-btn:hover {
+            background: #c82333;
+        }
+
+        .vehicle-count-box {
+            margin-top: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .count-number {
+            color: #2c5aa0;
+            font-size: 18px;
+        }
+
+        .sales-person-field {
+            position: relative;
+        }
+
+        .suggestions-box {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #ccc;
+            border-top: none;
+            border-radius: 0 0 4px 4px;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .suggestion-item {
+            padding: 8px 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 13px;
+        }
+
+        .suggestion-item:hover {
+            background: #f0f7ff;
+        }
+
+        .suggestion-initial {
+            font-weight: bold;
+            color: #2c5aa0;
+            margin-right: 5px;
+        }
+
+        .no-results {
+            padding: 8px 12px;
+            color: #999;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .submit-btn {
+            background: #28a745;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background: #218838;
+        }
+
+        @media screen and (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .fcl-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.fcl-table th,
+.fcl-table td {
+  border: 1px solid #ccc;
+  padding: 6px;
+  font-size: 13px;
+  word-wrap: break-word;
+  text-align: center;
+}
+
+.fcl-table th {
+  background: #2f5ea8;
+  color: white;
+  white-space: normal;   /* IMPORTANT */
+  line-height: 1.2;
+}
+
+
+    /* Top Button */
+    .top-bar{
+        padding:25px;
+    }
+    .back-btn{
+        width:100%;
+        background:#28a745;
+        color:#fff;
+        border:none;
+        padding:12px;
+        font-size:16px;
+        border-radius:6px;
+        cursor:pointer;
+    }
+
+    /* Center Card */
+    .center-box{
+        display:flex;
+        justify-content:center;
+        margin-top:40px;
+    }
+    .dashboard-card{
+        background:#fff;
+        width:450px;
+        padding:25px;
+        border-radius:20px;
+        text-align:center;
+        box-shadow:0 4px 10px rgba(0,0,0,0.1);
+    }
+    .dashboard-card h2{
+        margin-bottom:40px;
+    }
+    .btn{
+        width:50%;
+        padding: 15px;
+        border:none;
+        margin:10px 0;
+        font-size:16px;
+        border-radius:6px;
+        color:#fff;
+        cursor:pointer;
+    }
+    .green{ background:#28a745; }
+    .blue{ background:#007bff; }
+
+    /* Booking Headers */
+    .booking-header{
+        display:flex;
+        justify-content:space-between;
+        margin:40px 20px 20px;
+    }
+    .booking-title{
+        width:45%;
+        background:linear-gradient(to right,#1f2a7c,#1a237e);
+        color:#fff;
+        text-align:center;
+        padding:15px;
+        border-radius:30px;
+        font-weight:bold;
+    }
+
+    /* Cards Section */
+    .cards{
+        display:flex;
+        justify-content:space-around;
+        padding:40px;
+    }
+    .card{
+        width:22%;
+        padding:15px;
+        border-radius:10px;
+        font-size:14px;
+    }
+    .export20{ background:#e6f4ff; border-left:6px solid #2196f3; }
+    .import20{ background:#eaf7ea; border-left:6px solid #4caf50; }
+    .export40{ background:#e6f4ff; border-left:6px solid #2196f3; }
+    .import40{ background:#f1f8e9; border-left:6px solid #8bc34a; }
+
+    .count{
+        font-size:24px;
+        font-weight:bold;
+        margin-top:10px;
+    }
+
+    </style>
+</head>
+<body>
+
+    <a href="dashboard.html" class="btn green">Back to Dashboard</a>
+
+    <div class="container">
+        <h1 style="color: #2c5aa0; margin-bottom: 30px;">Vendor / Rate Entry Form</h1>
+
+        <!-- Basic Information -->
+        <h2 class="section-heading">Basic Information</h2>
+
+        <div class="form-grid">
+            <div class="form-field">
+            <label>Empty Yard Location</label>
+            <select>
+            <option value="">-- Select Vendor --</option>
+            <option>CONTAINER CORPORATION OF INDIA LIMITED</option>
+            <option>CONTAINER CORPORATION OF INDIA LIMITED</option> 
+            <option>MTL MARINE TRANS LOGISTICS PRIVATE LIMITED</option> 
+            <option>BRITISH TRANSPORT</option> 
+            <option>OCEANUS TRANSPORTS PRIVATE LIMITED</option> 
+            <option>THARUNJYAY LOGISTICS PRIVATE LIMITED</option> 
+            <option>A.K.TRANSPORT</option> <option>QUEEN ROADWAYS</option> 
+            <option>GREENWAYS SHIPPING AGENCIES PVT LTD</option> 
+            <option>SRI VALLALAR TRANSPORT</option> 
+            <option>ASN TRANSPORT</option> 
+            <option>MATHIINFO</option> 
+            <option>OVIYA TRANSPORT</option> 
+            <option>SRI AMMAN TRANS</option> 
+            <option>SRI MURUGAN TRANSPORT</option> 
+            <option>SKYB TRANS PVT LTD</option> 
+            <option>JSS TRANSPORTS</option> 
+            <option>INDRAYANI CONTAINER SERVICE</option> 
+            <option>SRI KRISHNA TRANSPORT</option> 
+            <option>GS TRANSPORT</option> 
+            <option>SRI THROUPATHIAMMAN TRANSPORT</option> 
+            <option>K. SHYAM PRASAD TRANSPORT</option> 
+            <option>VIKING MARINE INC</option> 
+            <option>VEEJAYAL ENTERPRISES</option> 
+        </select> 
+    </div> 
+ 
+             <div class="form-field">
+             <label>Loading Point</label> 
+            <select> <option>-- Select Stuffing Location --</option> 
+            <option>Factory Stuffing</option> 
+            <option>KAILASH SHIPPING SERVICES PVT. LTD.</option> 
+            <option>MARINE INFRASTRUCTURE DEVELOPER PVT. LTD. CFS</option> 
+            <option>SANCO TRANS LTD. (Sanco CFS)</option> 
+            <option>SATTVA HITECH AND CONWARE PVT. LTD.</option> 
+            <option>SATTVA CFS & LOGISTICS PRIVATE LIMITED</option> 
+            <option>SICAL SATTVA RAIL TERMINAL PVT. LTD.</option> 
+            <option>STP SERVICES PVT. LTD.</option> 
+            <option>SUDHARSAN LOGISTICS PVT. LTD.</option> 
+            <option>SUN GLOBAL LOGISTICS PVT. LTD.</option> 
+            <option>SUPPLY CHAIN LOGISTICS PVT. LTD.</option> 
+            <option>THIRU RANI LOGISTICS PVT. LTD.</option> 
+            <option>TRIWAY CONTAINER FREIGHT STATION PVT. LTD.</option> 
+            <option>VIKING WAREHOUSING</option> 
+            <option>WESTERN GATEWAY CARGO SERVICES PVT. LTD. (Ambur CFS)</option> 
+            <option>A.S. SHIPPING AGENCIES PVT. LTD.</option> 
+            <option>CONTAINER CORPORATION OF INDIA LTD. - ICD</option> 
+            <option>APM TERMINALS INDIA PVT. LTD.</option> 
+            <option>ENNORE CARGO CONTAINER TERMINAL PVT. LTD.</option> 
+            <option>BALMER LAWRIE & CO. LTD.</option> 
+            <option>GATEWAY DISTRIPARKS LIMITED</option> 
+            <option>CALYX CONTAINER TERMINALS PVT. LTD.</option> 
+            <option>CHANDRA CFS AND TERMINAL OPERATORS PVT. LTD.</option> 
+            <option>CHENNAI CONTAINER TERMINAL PVT. LTD.</option> 
+            <option>GERMAN EXPRESS SHIPPING AGENCY (INDIA) PVT. LTD.</option> 
+            <option>HIND TERMINALS PVT. LTD.</option> 
+            <option>Arakkonam – ICD</option> 
+            <option>Jolarpet – ICD</option> 
+            <option>Hyderabad – ICD</option> 
+            <option>Coimbatore – ICD</option> 
+            <option>Bangalore – ICD</option> 
+            <option>Hosur – ICD</option> 
+            <option>Thiruvetriyur – ICD</option> 
+            <option>Irungattukottai – ICD</option> 
+            <option>KISHAN MARINE SERVICES LLP</option> 
+            <option>POWER ENGINEERING – 1 C/O DP WORLD (VALLUR CFS)</option> 
+            <option>POWER ENGINEERING EMPTY YARD 4 ECCT</option> 
+            <option>CHENNAI AIRPORT</option> 
+            <option>SREE SRINIVASA REFCON PVT LTD</option> 
+            <option>ARIES CONTAINER TERMINAL (ACT)</option> 
+            <option>NOBLE CONTAINER SERVICES</option> 
+            <option>EMPEZAR GLOBAL CONTAINER TERMINAL</option> 
+            <option>THIRU RANI LOGISTIC PVT. LTD</option> 
+            <option>NHAVA SHEVA</option> 
+            <option>SAM HR SOLUTIONS LLP</option> 
+            <option>SEAROCK CONTAINER TERMINAL</option> 
+            <option>OCEAN STAR CONTAINER SOLUTIONS</option> 
+        </select> 
+    </div>
+
+        <div class="form-field"> 
+        <label> Clearance At</label> 
+        <select> 
+            <option>DIRECT PORT</option> 
+                <option>Factory Stuffing</option>
+                 <option>KAILASH SHIPPING SERVICES PVT. LTD.</option> 
+                 <option>MARINE INFRASTRUCTURE DEVELOPER PVT. LTD. CFS</option> 
+                 <option>SANCO TRANS LTD. (Sanco CFS)</option> 
+                 <option>SATTVA HITECH AND CONWARE PVT. LTD.</option> 
+                 <option>SATTVA CFS & LOGISTICS PRIVATE LIMITED</option> 
+                 <option>SICAL SATTVA RAIL TERMINAL PVT. LTD.</option> 
+                 <option>STP SERVICES PVT. LTD.</option> 
+                 <option>SUDHARSAN LOGISTICS PVT. LTD.</option> 
+                 <option>SUN GLOBAL LOGISTICS PVT. LTD.</option> 
+                 <option>SUPPLY CHAIN LOGISTICS PVT. LTD.</option> 
+                 <option>THIRU RANI LOGISTICS PVT. LTD.</option> 
+                 <option>TRIWAY CONTAINER FREIGHT STATION PVT. LTD.</option> 
+                 <option>VIKING WAREHOUSING</option> 
+                 <option>WESTERN GATEWAY CARGO SERVICES PVT. LTD. (Ambur CFS)</option> 
+                 <option>A.S. SHIPPING AGENCIES PVT. LTD.</option> 
+                 <option>CONTAINER CORPORATION OF INDIA LTD. - ICD</option> 
+                 <option>APM TERMINALS INDIA PVT. LTD.</option> 
+                 <option>ENNORE CARGO CONTAINER TERMINAL PVT. LTD.</option> 
+                 <option>BALMER LAWRIE & CO. LTD.</option> 
+                 <option>GATEWAY DISTRIPARKS LIMITED</option> 
+                 <option>CALYX CONTAINER TERMINALS PVT. LTD.</option> 
+                 <option>CHANDRA CFS AND TERMINAL OPERATORS PVT. LTD.</option> 
+                 <option>CHENNAI CONTAINER TERMINAL PVT. LTD.</option> 
+                 <option>GERMAN EXPRESS SHIPPING AGENCY (INDIA) PVT. LTD.</option> 
+                 <option>HIND TERMINALS PVT. LTD.</option> 
+                 <option>Arakkonam – ICD</option> 
+                 <option>Jolarpet – ICD</option> 
+                 <option>Hyderabad – ICD</option> 
+                 <option>Coimbatore – ICD</option> 
+                 <option>Bangalore – ICD</option> 
+                 <option>Hosur – ICD</option> 
+                 <option>Thiruvetriyur – ICD</option> 
+                 <option>Irungattukottai – ICD</option> 
+                 <option>KISHAN MARINE SERVICES LLP</option> 
+                 <option>POWER ENGINEERING – 1 C/O DP WORLD (VALLUR CFS)</option> 
+                 <option>POWER ENGINEERING EMPTY YARD 4 ECCT</option> 
+                 <option>CHENNAI AIRPORT</option> 
+                 <option>SREE SRINIVASA REFCON PVT LTD</option> 
+                 <option>ARIES CONTAINER TERMINAL (ACT)</option> 
+                 <option>NOBLE CONTAINER SERVICES</option> 
+                 <option>EMPEZAR GLOBAL CONTAINER TERMINAL</option> 
+                 <option>THIRU RANI LOGISTIC PVT. LTD</option> 
+                 <option>NHAVA SHEVA</option> 
+                 <option>SAM HR SOLUTIONS LLP</option> 
+                 <option>SEAROCK CONTAINER TERMINAL</option> 
+                 <option>OCEAN STAR CONTAINER SOLUTIONS</option> 
+                </select> 
+            </div> 
+        </div>
+          
+                <!-- Row 2 - Always visible -->
+                <div class="form-grid">      
+                <div class="form-field"> 
+                <label>Off Loading Point</label> 
+                <select> <option>-- Select Empty Pickup Location --</option> 
+                 <option>Factory Stuffing</option>
+                 <option>Chennai Port</option> 
+                 <option>Ennore Port</option> 
+                 <option>Kattupalli Port</option> 
+                 <option>Tuticorin Port</option> 
+                 <option>Cochin Port</option> 
+                 <option>Vallarpadam Port</option> 
+                 <option>Mangalore Port</option> 
+                 <option>Mormugao Port</option> 
+                 <option>Nhava Sheva Port</option>
+                 <option>Mundra Port</option> 
+                 <option>Hazira Port</option> 
+                 <option>Vizag Port</option> 
+                 <option>Kolkata Port</option>  
+        </select>
+          </div>
+
+            <div class="form-field">
+                <label>Shipment Type</label>
+                <select id="shipmentType" onchange="changeShipmentType(this.value)">
+                    <option value="">Select Shipment Type</option>
+                    <option value="SEA_FCL">Sea Shipment - FCL</option>
+                    <option value="FCL">FCL PNR</option>
+                    <option value="SEA_LCL">Sea Shipment - LCL</option>
+                    <option value="AIR">Air Shipment</option>
+                </select>
+            </div>
+
+            <div class="form-field">
+                <label>Vehicle Availability</label>
+                <select>
+                    <option value="">-- Select --</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- ==================== SEA FCL SECTION ==================== -->
+        <div id="seaFclSection" class="section">
+            <h2 class="section-heading">Sea Shipment - FCL (Full Container Load)</h2>
+
+            <div class="info-box">
+                <h4>Sea Shipment - FCL Information</h4>
+                <ul>
+                    <li><strong>FCL:</strong> Full Container Load (20 ft & 40 ft)</li>
+                    <li><strong>CBM:</strong> Cubic meter, is the freight volume of the shipment</li>
+                    <li><strong>MT:</strong> Metric Ton (1000 KG)</li>
+                </ul>
+            </div>
+
+            <h3 class="subsection-heading">Container Details</h3>
+
+            <div class="form-grid">
+                <div class="form-field sales-person-field">
+                    <label>Sales Person <span style="color: red;">*</span></label>
+                    <input 
+                        type="text" 
+                        id="fclSalesPerson" 
+                        placeholder="Type to search sales person" 
+                        autocomplete="off"
+                        oninput="searchSalesPerson('fcl')"
+                        onfocus="searchSalesPerson('fcl')">
+                    <div id="fclSuggestionsBox" class="suggestions-box"></div>
+                </div>
+
+                <div class="form-field"></div>
+               <div id="fclRows"></div>
+
+            <div class="form-field">
+    <label>Currency</label>
+    <select class="currencySelect">
+        <option value="INR">INR – ₹ Indian Rupee</option>
+        <option value="USD">USD – $ US Dollar</option>
+        <option value="EUR">EUR – € Euro</option>
+        <option value="GBP">GBP – £ British Pound</option>
+        <option value="AED">AED – د.إ UAE Dirham</option>
+        <option value="SAR">SAR – ﷼ Saudi Riyal</option>
+        <option value="JPY">JPY – ¥ Japanese Yen</option>
+        <option value="CNY">CNY – ¥ Chinese Yuan</option>
+        <option value="AUD">AUD – $ Australian Dollar</option>
+        <option value="CAD">CAD – $ Canadian Dollar</option>
+    </select>
+</div>
+
+                <div class="form-field">
+                    <label>No. of Containers</label>
+                    <input type="number" placeholder="ex: 1">
+                </div>
+
+                <div class="form-field">
+                    <label>Rate Per Container (₹)</label>
+                    <input type="number" placeholder="Enter Rate">
+                </div>
+            </div>
+
+            <!-- FCL Vehicle Entry -->
+            <h3 class="subsection-heading">Vehicle Details Entry</h3>
+            
+            <button type="button" class="add-vehicle-btn" onclick="addFclVehicleRow()">
+                ➕ Add Vehicle
+            </button>
+
+            <div style="width: 100%; overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 60px;">S.No</th>
+                            <th style="width: 150px;">Vehicle Number</th>
+                            <th style="width: 120px;">Weight Capacity</th>
+                            <th style="width: 120px;">Truck Length</th>
+                            <th style="width: 180px;">Pickup Point</th>
+                            <th style="width: 180px;">Delivery Point</th>
+                            <th style="width: 120px;">Total Amount (₹)</th>
+                            <th style="width: 100px; text-align: center;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="fclVehicleTableBody">
+                        <!-- Vehicle rows will be added here -->
+                    </tbody>
+                </table>
+
+                <div class="vehicle-count-box">
+                    Total Vehicles: <span class="count-number" id="fclVehicleCount">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== FCL PNR SECTION ==================== -->
+          <div id="fclPnrSection" class="section">
+
+         <h2 class="section-heading">FCL - PNR</h2>
+
+         <div class="info-box">
+        <h4>FCL - PNR Information</h4>
+        <ul>
+            <li><strong>FCL-PNR:</strong> Full Container Load – PNR Based</li>
+            <li><strong>CBM:</strong> Cubic meter, is the freight volume</li>
+            <li><strong>MT:</strong> Metric Ton (1000 KG)</li>
+        </ul>
+    </div>
+
+    <h3 class="subsection-heading">Container Details</h3>
+
+    <div class="form-grid">
+
+        <div class="form-field sales-person-field">
+            <label>Sales Person <span style="color: red;">*</span></label>
+            <input 
+                type="text" 
+                placeholder="Type to search sales person">
+        </div>
+
+        
+                <div class="form-field"></div>
+                 <div id="fclpnrRows"></div>
+
+       <div class="form-field">
+    <label>Currency</label>
+    <select class="currencySelect">
+        <option value="INR">INR – ₹ Indian Rupee</option>
+        <option value="USD">USD – $ US Dollar</option>
+        <option value="EUR">EUR – € Euro</option>
+        <option value="GBP">GBP – £ British Pound</option>
+        <option value="AED">AED – د.إ UAE Dirham</option>
+        <option value="SAR">SAR – ﷼ Saudi Riyal</option>
+        <option value="JPY">JPY – ¥ Japanese Yen</option>
+        <option value="CNY">CNY – ¥ Chinese Yuan</option>
+        <option value="AUD">AUD – $ Australian Dollar</option>
+        <option value="CAD">CAD – $ Canadian Dollar</option>
+    </select>
+</div>
+
+        <div class="form-field">
+            <label>No. of Containers</label>
+            <input type="number" placeholder="ex: 1">
+        </div>
+
+        <div class="form-field">
+            <label>Rate Per Container (₹)</label>
+            <input type="number" placeholder="Enter Rate">
+        </div>
+    </div>
+
+    <h3 class="subsection-heading">FCL PNR Details Entry</h3>
+
+    
+        <button type="button" onclick="addFclRow()" class="add-row-btn">
+        ➕ Add Row
+    </button>
+
+    <table class="fcl-table">
+        <thead>
+            <tr>
+                <th>S.No</th>
+                <th>Vessel<br>Name</th>
+                <th>Voyage<br>No</th>
+                <th>IGM<br>No</th>
+                <th>IGM<br>Date</th>
+                <th>Line<br>No</th>
+                <th>Port of<br>Discharge</th>
+                <th>Container<br>Type</th>
+                <th>Container<br>No</th>
+                <th>DPD /<br>CFS</th>
+                <th>CFS<br>Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody id="fclPnrBody"></tbody>
+    </table>
+</div>
+
+        <!-- ==================== SEA LCL SECTION ==================== -->
+        <div id="seaLclSection" class="section">
+            <h2 class="section-heading">Sea Shipment - LCL (Less Container Load)</h2>
+
+            <div class="info-box">
+                <h4>LCL Information & CBM Calculation</h4>
+                <ul>
+                    <li><strong>LCL:</strong> Less Container Load</li>
+                    <li><strong>CBM:</strong> Cubic meter, is the freight volume of the shipment</li>
+                </ul>
+                <p style="margin-top: 10px;"><strong>CBM Calculation Formula:</strong></p>
+                <ul>
+                    <li>Centimeters (cm): (L × W × H) / 1,000,000 = m³</li>
+                    <li>Millimeters (mm): (L × W × H) / 1,000,000,000 = m³</li>
+                    <li>Inches: (L × W × H) / 61,023.7 = m³</li>
+                </ul>
+            </div>
+
+            <div class="form-grid">
+                <div class="form-field sales-person-field">
+                    <label>Sales Person <span style="color: red;">*</span></label>
+                    <input 
+                        type="text" 
+                        id="lclSalesPerson" 
+                        placeholder="Type to search sales person" 
+                        autocomplete="off"
+                        oninput="searchSalesPerson('lcl')"
+                        onfocus="searchSalesPerson('lcl')">
+                    <div id="lclSuggestionsBox" class="suggestions-box"></div>
+                </div>
+
+                <div class="form-field"></div>
+                <div id="lclRows"></div>
+
+
+              <div class="form-field">
+    <label>Currency</label>
+    <select class="currencySelect">
+        <option value="INR">INR – ₹ Indian Rupee</option>
+        <option value="USD">USD – $ US Dollar</option>
+        <option value="EUR">EUR – € Euro</option>
+        <option value="GBP">GBP – £ British Pound</option>
+        <option value="AED">AED – د.إ UAE Dirham</option>
+        <option value="SAR">SAR – ﷼ Saudi Riyal</option>
+        <option value="JPY">JPY – ¥ Japanese Yen</option>
+        <option value="CNY">CNY – ¥ Chinese Yuan</option>
+        <option value="AUD">AUD – $ Australian Dollar</option>
+        <option value="CAD">CAD – $ Canadian Dollar</option>
+    </select>
+</div>
+                    
+                <div class="form-field">
+                    <label>No. of Packages</label>
+                    <input type="number" id="lclNoOfPackages" placeholder="Enter Number of Packages" oninput="calculateLCLTotalCBM()">
+                </div>
+
+                <div class="form-field">
+                    <label>Measurement Type</label>
+                    <select id="lclMeasurementType" onchange="updateLCLUnits(); calculateCBM();">
+                        <option value="cm">Centimeters (cm)</option>
+                        <option value="mm">Millimeters (mm)</option>
+                        <option value="inch">Inches</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-grid">
+                <div class="form-field">
+                    <label>Length <span id="lclLengthUnit">(cm)</span></label>
+                    <input type="number" step="0.01" id="lclLength" placeholder="Enter Length" oninput="calculateCBM()">
+                </div>
+
+                <div class="form-field">
+                    <label>Breadth/Width <span id="lclWidthUnit">(cm)</span></label>
+                    <input type="number" step="0.01" id="lclWidth" placeholder="Enter Breadth" oninput="calculateCBM()">
+                </div>
+
+                <div class="form-field">
+                    <label>Height <span id="lclHeightUnit">(cm)</span></label>
+                    <input type="number" step="0.01" id="lclHeight" placeholder="Enter Height" oninput="calculateCBM()">
+                </div>
+            </div>
+
+            <div class="form-grid">
+                <div class="form-field">
+                    <label>CBM per Piece (m³)</label>
+                    <input type="number" step="0.001" id="cbmPerPiece" readonly>
+                </div>
+
+                <div class="form-field">
+                    <label>Total No. of CBM (m³)</label>
+                    <input type="number" step="0.001" id="totalCBM" readonly>
+                </div>
+
+                <div class="form-field">
+                    <!-- Empty space -->
+                </div>
+            </div>
+
+            <!-- LCL Vehicle Entry -->
+            <h3 class="subsection-heading">Vehicle Details Entry</h3>
+            
+            <button type="button" class="add-vehicle-btn" onclick="addLclVehicleRow()">
+                ➕ Add Vehicle
+            </button>
+
+            <div style="width: 100%; overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 60px;">S.No</th>
+                            <th style="width: 150px;">Vehicle Number</th>
+                            <th style="width: 120px;">Weight Capacity</th>
+                            <th style="width: 120px;">Truck Length</th>
+                            <th style="width: 180px;">Pickup Point</th>
+                            <th style="width: 180px;">Delivery Point</th>
+                            <th style="width: 120px;">Total Amount (₹)</th>
+                            <th style="width: 100px; text-align: center;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="lclVehicleTableBody">
+                        <!-- Vehicle rows will be added here -->
+                    </tbody>
+                </table>
+
+                <div class="vehicle-count-box">
+                    Total Vehicles: <span class="count-number" id="lclVehicleCount">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== AIR SECTION ==================== -->
+        <div id="airSection" class="section">
+            <h2 class="section-heading">Air Shipment</h2>
+
+            <div class="info-box">
+                <h4>Air Shipment - Weight or Volume whichever is high</h4>
+                <p><strong>Select Measurement Type:</strong></p>
+            </div>
+
+            <div class="form-grid">
+                <div class="form-field sales-person-field">
+                    <label>Sales Person <span style="color: red;">*</span></label>
+                    <input 
+                        type="text" 
+                        id="airSalesPerson" 
+                        placeholder="Type to search sales person" 
+                        autocomplete="off"
+                        oninput="searchSalesPerson('air')"
+                        onfocus="searchSalesPerson('air')">
+                    <div id="airSuggestionsBox" class="suggestions-box"></div>
+                </div>
+
+                <div class="form-field"></div>
+                 <div id="airRows"></div>
+
+                <div class="form-field">
+                    <label>Measurement Type</label>
+                    <select id="airMeasurementType" onchange="showAirMeasurement()">
+                        <option value="">-- Select Measurement Type --</option>
+                        <option value="cm">Centimeters (CM)</option>
+                        <option value="mm">Millimeters (MM)</option>
+                        <option value="inch">Inches</option>
+                    </select>
+                </div>
+
+                <div class="form-field">
+                    <label>Actual Weight (kg)</label>
+                    <input type="number" step="0.01" id="airActualWeight" placeholder="Enter Actual Weight" oninput="updateAirCalculation()">
+                </div>
+            
+            <div class="form-field">
+    <label>Currency</label>
+    <select class="currencySelect">
+        <option value="INR">INR – ₹ Indian Rupee</option>
+        <option value="USD">USD – $ US Dollar</option>
+        <option value="EUR">EUR – € Euro</option>
+        <option value="GBP">GBP – £ British Pound</option>
+        <option value="AED">AED – د.إ UAE Dirham</option>
+        <option value="SAR">SAR – ﷼ Saudi Riyal</option>
+        <option value="JPY">JPY – ¥ Japanese Yen</option>
+        <option value="CNY">CNY – ¥ Chinese Yuan</option>
+        <option value="AUD">AUD – $ Australian Dollar</option>
+        <option value="CAD">CAD – $ Canadian Dollar</option>
+    </select>
+</div>
+            </div>
+
+            <!-- CM Calculation Section -->
+            <div id="airCmSection" style="display: none;">
+                <div class="info-box" style="background: #e3f2fd;">
+                    <h4>📐 Centimeters (CM) Calculation</h4>
+                    <p><strong>Formula:</strong> (L × W × H) ÷ 6000</p>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label>Length (cm)</label>
+                        <input type="number" step="0.01" id="airCmLength" placeholder="Enter Length" oninput="calculateAirCm()">
+                    </div>
+
+                    <div class="form-field">
+                        <label>Breadth/Width (cm)</label>
+                        <input type="number" step="0.01" id="airCmWidth" placeholder="Enter Width" oninput="calculateAirCm()">
+                    </div>
+
+                    <div class="form-field">
+                        <label>Height (cm)</label>
+                        <input type="number" step="0.01" id="airCmHeight" placeholder="Enter Height" oninput="calculateAirCm()">
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label>Volumetric Weight (kg)</label>
+                        <input type="number" step="0.01" id="airCmVolumetric" readonly>
+                    </div>
+
+                    <div class="form-field">
+                        <label>Chargeable Weight (kg)</label>
+                        <input type="number" step="0.01" id="airCmChargeable" readonly>
+                    </div>
+
+                    <div class="form-field">
+                        <label>Rate Per Kg (₹)</label>
+                        <input type="number" id="airCmRate" placeholder="Enter Rate" oninput="calculateAirCm()">
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label>Total Amount (₹)</label>
+                        <input type="number" id="airCmTotal" readonly style="background: #e8f5e9; font-weight: bold;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- MM Calculation Section -->
+            <div id="airMmSection" style="display: none;">
+                <div class="info-box" style="background: #fff3e0;">
+                    <h4>📐 Millimeters (MM) Calculation</h4>
+                    <p><strong>Formula:</strong> (L × W × H) ÷ 10 ÷ 6000</p>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label>Length (mm)</label>
+                        <input type="number" step="0.01" id="airMmLength" placeholder="Enter Length" oninput="calculateAirMm()">
+                    </div>
+
+                    <div class="form-field">
+                        <label>Breadth/Width (mm)</label>
+                        <input type="number" step="0.01" id="airMmWidth" placeholder="Enter Width" oninput="calculateAirMm()">
+                    </div>
+
+                    <div class="form-field">
+                        <label>Height (mm)</label>
+                        <input type="number" step="0.01" id="airMmHeight" placeholder="Enter Height" oninput="calculateAirMm()">
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label>Volumetric Weight (kg)</label>
+                        <input type="number" step="0.01" id="airMmVolumetric" readonly>
+                    </div>
+
+                    <div class="form-field">
+                        <label>Chargeable Weight (kg)</label>
+                        <input type="number" step="0.01" id="airMmChargeable" readonly>
+                    </div>
+
+                    <div class="form-field">
+                        <label>Rate Per Kg (₹)</label>
+                        <input type="number" id="airMmRate" placeholder="Enter Rate" oninput="calculateAirMm()">
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label>Total Amount (₹)</label>
+                        <input type="number" id="airMmTotal" readonly style="background: #e8f5e9; font-weight: bold;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Inches Calculation Section -->
+            <div id="airInchSection" style="display: none;">
+                <div class="info-box" style="background: #fce4ec;">
+                    <h4>📐 Inches Calculation</h4>
+                    <p><strong>Formula:</strong> (L × W × H) ÷ 366</p>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label>Length (inches)</label>
+                        <input type="number" step="0.01" id="airInchLength" placeholder="Enter Length" oninput="calculateAirInch()">
+                    </div>
+
+                    <div class="form-field">
+                        <label>Breadth/Width (inches)</label>
+                        <input type="number" step="0.01" id="airInchWidth" placeholder="Enter Width" oninput="calculateAirInch()">
+                    </div>
+
+                    <div class="form-field">
+                        <label>Height (inches)</label>
+                        <input type="number" step="0.01" id="airInchHeight" placeholder="Enter Height" oninput="calculateAirInch()">
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label>Volumetric Weight (kg)</label>
+                        <input type="number" step="0.01" id="airInchVolumetric" readonly>
+                    </div>
+
+                    <div class="form-field">
+                        <label>Chargeable Weight (kg)</label>
+                        <input type="number" step="0.01" id="airInchChargeable" readonly>
+                    </div>
+
+                    <div class="form-field">
+                        <label>Rate Per Kg (₹)</label>
+                        <input type="number" id="airInchRate" placeholder="Enter Rate" oninput="calculateAirInch()">
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label>Total Amount (₹)</label>
+                        <input type="number" id="airInchTotal" readonly style="background: #e8f5e9; font-weight: bold;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Air Vehicle Entry -->
+            <h3 class="subsection-heading">Vehicle Details Entry</h3>
+            
+            <button type="button" class="add-vehicle-btn" onclick="addAirVehicleRow()">
+                ➕ Add Vehicle
+            </button>
+
+            <div style="width: 100%; overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 60px;">S.No</th>
+                            <th style="width: 150px;">Vehicle Number</th>
+                            <th style="width: 120px;">Weight Capacity</th>
+                            <th style="width: 120px;">Truck Length</th>
+                            <th style="width: 180px;">Pickup Point</th>
+                            <th style="width: 180px;">Delivery Point</th>
+                            <th style="width: 120px;">Total Amount (₹)</th>
+                            <th style="width: 100px; text-align: center;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="airVehicleTableBody">
+                        <!-- Vehicle rows will be added here -->
+                    </tbody>
+                </table>
+
+                <div class="vehicle-count-box">
+                    Total Vehicles: <span class="count-number" id="airVehicleCount">0</span>
+                </div>
+            </div>
+        </div>
+
+        <button type="button" class="submit-btn" onclick="submitForm()">Submit Vendor Data</button>
+    </div>
+
+    <script>
+        // ==================== SALES PERSON DATA ====================
+        const salesPersons = [
+            { code: "M K", name: "M. Kalyani" },
+            { code: "R S", name: "R. Suresh" },
+            { code: "P V", name: "P. Vijay" },
+            { code: "S M", name: "S. Meena" },
+            { code: "A R", name: "A. Ramesh" },
+            { code: "K P", name: "K. Priya" },
+            { code: "N S", name: "N. Srinivas" },
+            { code: "D K", name: "D. Kumar" },
+            { code: "L M", name: "L. Malini" },
+            { code: "V R", name: "V. Ravi" },
+            { code: "B S", name: "B. Selvam" },
+            { code: "T N", name: "T. Nagesh" },
+            { code: "G K", name: "G. Karthik" },
+            { code: "H P", name: "H. Prakash" },
+            { code: "J R", name: "J. Rajesh" },
+            { code: "I S", name: "I. Saravanan" },
+            { code: "C V", name: "C. Vignesh" },
+            { code: "E M", name: "E. Murugan" },
+            { code: "F K", name: "F. Kavitha" },
+            { code: "W R", name: "W. Raman" },
+            { code: "Y S", name: "Y. Senthil" },
+            { code: "Z K", name: "Z. Keerthana" },
+            { code: "U M", name: "U. Mahesh" },
+            { code: "O P", name: "O. Prabhu" },
+            { code: "Q R", name: "Q. Ramya" },
+            { code: "X S", name: "X. Sakthivel" },
+            { code: "AA K", name: "A. Arun Kumar" },
+            { code: "AB M", name: "A. Bharathi Mani" },
+            { code: "AC R", name: "A. Chandru Raj" },
+            { code: "AD S", name: "A. Divya Shree" }
+        ];
+
+        // ==================== SALES PERSON SEARCH ====================
+        function searchSalesPerson(type) {
+            const input = document.getElementById(type + 'SalesPerson');
+            const suggestionsBox = document.getElementById(type + 'SuggestionsBox');
+            
+            if (!input || !suggestionsBox) return;
+            
+            const searchTerm = input.value.toLowerCase().trim();
+
+            if (searchTerm === '') {
+                suggestionsBox.style.display = 'none';
+                return;
+            }
+
+            const filtered = salesPersons.filter(person => {
+                const code = person.code.toLowerCase();
+                const name = person.name.toLowerCase();
+                return code.includes(searchTerm) || name.includes(searchTerm);
+            });
+
+            if (filtered.length > 0) {
+                let html = '';
+                filtered.forEach(person => {
+                    html += `
+                        <div class="suggestion-item" onclick="selectSalesPerson('${type}', '${person.code}', '${person.name}')">
+                            <span class="suggestion-initial">${person.code}</span>
+                            <span>- ${person.name}</span>
+                        </div>
+                    `;
+                });
+                suggestionsBox.innerHTML = html;
+                suggestionsBox.style.display = 'block';
+            } else {
+                suggestionsBox.innerHTML = '<div class="no-results">No sales person found</div>';
+                suggestionsBox.style.display = 'block';
+            }
+        }
+
+        function selectSalesPerson(type, code, name) {
+            const input = document.getElementById(type + 'SalesPerson');
+            const suggestionsBox = document.getElementById(type + 'SuggestionsBox');
+            
+            if (input && suggestionsBox) {
+                input.value = code + ' - ' + name;
+                suggestionsBox.style.display = 'none';
+            }
+        }
+
+        // Hide suggestions when clicking outside
+        document.addEventListener('click', function(e) {
+            ['fcl', 'lcl', 'air'].forEach(type => {
+                const input = document.getElementById(type + 'SalesPerson');
+                const suggestionsBox = document.getElementById(type + 'SuggestionsBox');
+                if (input && suggestionsBox && !input.contains(e.target) && !suggestionsBox.contains(e.target)) {
+                    suggestionsBox.style.display = 'none';
+                }
+            });
+        });
+
+        // ==================== SHIPMENT TYPE TOGGLE ====================
+        function changeShipmentType(value) {
+            const seaFclSection = document.getElementById("seaFclSection");
+            const fclPnrSection = document.getElementById("fclPnrSection");
+            const seaLclSection = document.getElementById("seaLclSection");
+            const airSection = document.getElementById("airSection");
+            
+            // Hide all sections
+            seaFclSection.style.display = "none";
+            fclPnrSection.style.display = "none";
+            seaLclSection.style.display = "none";
+            airSection.style.display = "none";
+
+            // Show selected section
+            if (value === "SEA_FCL") {
+                seaFclSection.style.display = "block";
+            } else if (value === "FCL") {
+                fclPnrSection.style.display = "block";
+            } else if (value === "SEA_LCL") {
+                seaLclSection.style.display = "block";
+            } else if (value === "AIR") {
+                airSection.style.display = "block";
+            }
+        }
+
+        // ==================== LCL CALCULATIONS ====================
+        function updateLCLUnits() {
+            const unit = document.getElementById("lclMeasurementType").value;
+            const unitText = unit === 'cm' ? '(cm)' : unit === 'inch' ? '(inches)' : '(mm)';
+            
+            document.getElementById("lclLengthUnit").innerText = unitText;
+            document.getElementById("lclWidthUnit").innerText = unitText;
+            document.getElementById("lclHeightUnit").innerText = unitText;
+        }
+
+        let cbmPerPieceValue = 0;
+
+        function calculateCBM() {
+            let length = Number(document.getElementById("lclLength").value) || 0;
+            let width = Number(document.getElementById("lclWidth").value) || 0;
+            let height = Number(document.getElementById("lclHeight").value) || 0;
+            
+            const unit = document.getElementById("lclMeasurementType").value;
+            let divisor = 1;
+
+            if (unit === 'cm') {
+                divisor = 1000000;
+            } else if (unit === 'mm') {
+                divisor = 1000000000;
+            } else if (unit === 'inch') {
+                divisor = 61023.7;
+            }
+
+            cbmPerPieceValue = (length * width * height) / divisor;
+            document.getElementById("cbmPerPiece").value = cbmPerPieceValue.toFixed(3);
+            
+            calculateLCLTotalCBM();
+        }
+
+        function calculateLCLTotalCBM() {
+            let noOfPackages = Number(document.getElementById("lclNoOfPackages").value) || 0;
+            let totalCBMValue = cbmPerPieceValue * noOfPackages;
+            document.getElementById("totalCBM").value = totalCBMValue.toFixed(3);
+        }
+
+        // ==================== AIR CALCULATIONS ====================
+        function showAirMeasurement() {
+            const type = document.getElementById("airMeasurementType").value;
+            
+            document.getElementById("airCmSection").style.display = "none";
+            document.getElementById("airMmSection").style.display = "none";
+            document.getElementById("airInchSection").style.display = "none";
+            
+            if (type === "cm") {
+                document.getElementById("airCmSection").style.display = "block";
+            } else if (type === "mm") {
+                document.getElementById("airMmSection").style.display = "block";
+            } else if (type === "inch") {
+                document.getElementById("airInchSection").style.display = "block";
+            }
+        }
+
+        function updateAirCalculation() {
+            const type = document.getElementById("airMeasurementType").value;
+            if (type === "cm") calculateAirCm();
+            else if (type === "mm") calculateAirMm();
+            else if (type === "inch") calculateAirInch();
+        }
+
+        function calculateAirCm() {
+            let length = Number(document.getElementById("airCmLength").value) || 0;
+            let width = Number(document.getElementById("airCmWidth").value) || 0;
+            let height = Number(document.getElementById("airCmHeight").value) || 0;
+            let actualWeight = Number(document.getElementById("airActualWeight").value) || 0;
+            let rate = Number(document.getElementById("airCmRate").value) || 0;
+            
+            let volumetricWeight = (length * width * height) / 6000;
+            let chargeableWeight = Math.max(actualWeight, volumetricWeight);
+            let total = chargeableWeight * rate;
+            
+            document.getElementById("airCmVolumetric").value = volumetricWeight.toFixed(2);
+            document.getElementById("airCmChargeable").value = chargeableWeight.toFixed(2);
+            document.getElementById("airCmTotal").value = total.toFixed(2);
+        }
+
+        function calculateAirMm() {
+            let length = Number(document.getElementById("airMmLength").value) || 0;
+            let width = Number(document.getElementById("airMmWidth").value) || 0;
+            let height = Number(document.getElementById("airMmHeight").value) || 0;
+            let actualWeight = Number(document.getElementById("airActualWeight").value) || 0;
+            let rate = Number(document.getElementById("airMmRate").value) || 0;
+            
+            let volumetricWeight = (length * width * height) / 10 / 6000;
+            let chargeableWeight = Math.max(actualWeight, volumetricWeight);
+            let total = chargeableWeight * rate;
+            
+            document.getElementById("airMmVolumetric").value = volumetricWeight.toFixed(2);
+            document.getElementById("airMmChargeable").value = chargeableWeight.toFixed(2);
+            document.getElementById("airMmTotal").value = total.toFixed(2);
+        }
+
+        function calculateAirInch() {
+            let length = Number(document.getElementById("airInchLength").value) || 0;
+            let width = Number(document.getElementById("airInchWidth").value) || 0;
+            let height = Number(document.getElementById("airInchHeight").value) || 0;
+            let actualWeight = Number(document.getElementById("airActualWeight").value) || 0;
+            let rate = Number(document.getElementById("airInchRate").value) || 0;
+            
+            let volumetricWeight = (length * width * height) / 366;
+            let chargeableWeight = Math.max(actualWeight, volumetricWeight);
+            let total = chargeableWeight * rate;
+            
+            document.getElementById("airInchVolumetric").value = volumetricWeight.toFixed(2);
+            document.getElementById("airInchChargeable").value = chargeableWeight.toFixed(2);
+            document.getElementById("airInchTotal").value = total.toFixed(2);
+        }
+
+        // ==================== FCL VEHICLE ENTRY ====================
+        let fclVehicleCounter = 0;
+
+        function addFclVehicleRow() {
+            fclVehicleCounter++;
+            const tbody = document.getElementById('fclVehicleTableBody');
+            const row = document.createElement('tr');
+            row.id = `fcl-vehicle-row-${fclVehicleCounter}`;
+            
+            row.innerHTML = `
+                <td>${fclVehicleCounter}</td>
+                <td>
+                    <input type="text" 
+                           class="vehicle-input"
+                           id="fcl-vehicle-no-${fclVehicleCounter}" 
+                           placeholder="e.g., TN 01 AB 1234">
+                </td>
+                <td>
+                    <select class="vehicle-input" id="fcl-weight-capacity-${fclVehicleCounter}">
+                        <option value="">-- Select --</option>
+                        <option value="1ton">1 Ton</option>
+                        <option value="3ton">3 Ton</option>
+                        <option value="5ton">5 Ton</option>
+                        <option value="7ton">7 Ton</option>
+                        <option value="10ton">10 Ton</option>
+                        <option value="12ton">12 Ton</option>
+                        <option value="15ton">15 Ton</option>
+                        <option value="20ton">20 Ton</option>
+                    </select>
+                </td>
+                <td>
+                    <select class="vehicle-input" id="fcl-truck-length-${fclVehicleCounter}">
+                        <option value="">-- Select --</option>
+                        <option value="10feet">10 Feet</option>
+                        <option value="12feet">12 Feet</option>
+                        <option value="14feet">14 Feet</option>
+                        <option value="17feet">17 Feet</option>
+                        <option value="19feet">19 Feet</option>
+                        <option value="20feet">20 Feet</option>
+                        <option value="32feet">32 Feet</option>
+                        <option value="40feet">40 Feet</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" 
+                           class="vehicle-input"
+                           id="fcl-pickup-point-${fclVehicleCounter}" 
+                           placeholder="Enter Pickup Point">
+                </td>
+                <td>
+                    <input type="text" 
+                           class="vehicle-input"
+                           id="fcl-delivery-point-${fclVehicleCounter}" 
+                           placeholder="Enter Delivery Point">
+                </td>
+                <td>
+                    <input type="number" 
+                           class="vehicle-input"
+                           id="fcl-total-amount-${fclVehicleCounter}" 
+                           placeholder="Enter Amount">
+                </td>
+                <td style="text-align: center;">
+                    <button type="button" 
+                            class="remove-btn"
+                            onclick="removeFclVehicleRow(${fclVehicleCounter})">
+                        Remove
+                    </button>
+                </td>
+            `;
+            
+            tbody.appendChild(row);
+            updateFclVehicleCount();
+        }
+
+        function removeFclVehicleRow(id) {
+            const row = document.getElementById(`fcl-vehicle-row-${id}`);
+            if (row) {
+                row.remove();
+                updateFclVehicleCount();
+                renumberFclVehicles();
+            }
+        }
+
+        function renumberFclVehicles() {
+            const rows = document.querySelectorAll('#fclVehicleTableBody tr');
+            rows.forEach((row, index) => {
+                const firstCell = row.querySelector('td:first-child');
+                if (firstCell) {
+                    firstCell.textContent = index + 1;
+                }
+            });
+        }
+
+        function updateFclVehicleCount() {
+            const count = document.querySelectorAll('#fclVehicleTableBody tr').length;
+            document.getElementById('fclVehicleCount').textContent = count;
+        }
+
+        // ==================== LCL VEHICLE ENTRY ====================
+        let lclVehicleCounter = 0;
+
+        function addLclVehicleRow() {
+            lclVehicleCounter++;
+            const tbody = document.getElementById('lclVehicleTableBody');
+            const row = document.createElement('tr');
+            row.id = `lcl-vehicle-row-${lclVehicleCounter}`;
+            
+            row.innerHTML = `
+                <td>${lclVehicleCounter}</td>
+                <td>
+                    <input type="text" 
+                           class="vehicle-input"
+                           id="lcl-vehicle-no-${lclVehicleCounter}" 
+                           placeholder="e.g., TN 01 AB 1234">
+                </td>
+                <td>
+                    <select class="vehicle-input" id="lcl-weight-capacity-${lclVehicleCounter}">
+                        <option value="">-- Select --</option>
+                        <option value="1ton">1 Ton</option>
+                        <option value="3ton">3 Ton</option>
+                        <option value="5ton">5 Ton</option>
+                        <option value="7ton">7 Ton</option>
+                        <option value="10ton">10 Ton</option>
+                        <option value="12ton">12 Ton</option>
+                        <option value="15ton">15 Ton</option>
+                        <option value="20ton">20 Ton</option>
+                    </select>
+                </td>
+                <td>
+                    <select class="vehicle-input" id="lcl-truck-length-${lclVehicleCounter}">
+                        <option value="">-- Select --</option>
+                        <option value="10feet">10 Feet</option>
+                        <option value="12feet">12 Feet</option>
+                        <option value="14feet">14 Feet</option>
+                        <option value="17feet">17 Feet</option>
+                        <option value="19feet">19 Feet</option>
+                        <option value="20feet">20 Feet</option>
+                        <option value="32feet">32 Feet</option>
+                        <option value="40feet">40 Feet</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" 
+                           class="vehicle-input"
+                           id="lcl-pickup-point-${lclVehicleCounter}" 
+                           placeholder="Enter Pickup Point">
+                </td>
+                <td>
+                    <input type="text" 
+                           class="vehicle-input"
+                           id="lcl-delivery-point-${lclVehicleCounter}" 
+                           placeholder="Enter Delivery Point">
+                </td>
+                <td>
+                    <input type="number" 
+                           class="vehicle-input"
+                           id="lcl-total-amount-${lclVehicleCounter}" 
+                           placeholder="Enter Amount">
+                </td>
+                <td style="text-align: center;">
+                    <button type="button" 
+                            class="remove-btn"
+                            onclick="removeLclVehicleRow(${lclVehicleCounter})">
+                        Remove
+                    </button>
+                </td>
+            `;
+            
+            tbody.appendChild(row);
+            updateLclVehicleCount();
+        }
+
+        function removeLclVehicleRow(id) {
+            const row = document.getElementById(`lcl-vehicle-row-${id}`);
+            if (row) {
+                row.remove();
+                updateLclVehicleCount();
+                renumberLclVehicles();
+            }
+        }
+
+        function renumberLclVehicles() {
+            const rows = document.querySelectorAll('#lclVehicleTableBody tr');
+            rows.forEach((row, index) => {
+                const firstCell = row.querySelector('td:first-child');
+                if (firstCell) {
+                    firstCell.textContent = index + 1;
+                }
+            });
+        }
+
+        function updateLclVehicleCount() {
+            const count = document.querySelectorAll('#lclVehicleTableBody tr').length;
+            document.getElementById('lclVehicleCount').textContent = count;
+        }
+
+        // ==================== AIR VEHICLE ENTRY ====================
+        let airVehicleCounter = 0;
+
+        function addAirVehicleRow() {
+            airVehicleCounter++;
+            const tbody = document.getElementById('airVehicleTableBody');
+            const row = document.createElement('tr');
+            row.id = `air-vehicle-row-${airVehicleCounter}`;
+            
+            row.innerHTML = `
+                <td>${airVehicleCounter}</td>
+                <td>
+                    <input type="text" 
+                           class="vehicle-input"
+                           id="air-vehicle-no-${airVehicleCounter}" 
+                           placeholder="e.g., TN 01 AB 1234">
+                </td>
+                <td>
+                    <select class="vehicle-input" id="air-weight-capacity-${airVehicleCounter}">
+                        <option value="">-- Select --</option>
+                        <option value="1ton">1 Ton</option>
+                        <option value="3ton">3 Ton</option>
+                        <option value="5ton">5 Ton</option>
+                        <option value="7ton">7 Ton</option>
+                        <option value="10ton">10 Ton</option>
+                        <option value="12ton">12 Ton</option>
+                        <option value="15ton">15 Ton</option>
+                        <option value="20ton">20 Ton</option>
+                    </select>
+                </td>
+                <td>
+                    <select class="vehicle-input" id="air-truck-length-${airVehicleCounter}">
+                        <option value="">-- Select --</option>
+                        <option value="10feet">10 Feet</option>
+                        <option value="12feet">12 Feet</option>
+                        <option value="14feet">14 Feet</option>
+                        <option value="17feet">17 Feet</option>
+                        <option value="19feet">19 Feet</option>
+                        <option value="20feet">20 Feet</option>
+                        <option value="32feet">32 Feet</option>
+                        <option value="40feet">40 Feet</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" 
+                           class="vehicle-input"
+                           id="air-pickup-point-${airVehicleCounter}" 
+                           placeholder="Enter Pickup Point">
+                </td>
+                <td>
+                    <input type="text" 
+                           class="vehicle-input"
+                           id="air-delivery-point-${airVehicleCounter}" 
+                           placeholder="Enter Delivery Point">
+                </td>
+                <td>
+                    <input type="number" 
+                           class="vehicle-input"
+                           id="air-total-amount-${airVehicleCounter}" 
+                           placeholder="Enter Amount">
+                </td>
+                <td style="text-align: center;">
+                    <button type="button" 
+                            class="remove-btn"
+                            onclick="removeAirVehicleRow(${airVehicleCounter})">
+                        Remove
+                    </button>
+                </td>
+            `;
+            
+            tbody.appendChild(row);
+            updateAirVehicleCount();
+        }
+
+        function removeAirVehicleRow(id) {
+            const row = document.getElementById(`air-vehicle-row-${id}`);
+            if (row) {
+                row.remove();
+                updateAirVehicleCount();
+                renumberAirVehicles();
+            }
+        }
+
+        function renumberAirVehicles() {
+            const rows = document.querySelectorAll('#airVehicleTableBody tr');
+            rows.forEach((row, index) => {
+                const firstCell = row.querySelector('td:first-child');
+                if (firstCell) {
+                    firstCell.textContent = index + 1;
+                }
+            });
+        }
+
+        function updateAirVehicleCount() {
+            const count = document.querySelectorAll('#airVehicleTableBody tr').length;
+            document.getElementById('airVehicleCount').textContent = count;
+        }
+
+        // ==================== FORM SUBMISSION ====================
+        function submitForm() {
+            const shipmentType = document.getElementById('shipmentType').value;
+            
+            if (!shipmentType) {
+                alert('⚠️ Please select a Shipment Type');
+                return;
+            }
+
+            let vehicleData = [];
+            let vehicleCount = 0;
+
+            if (shipmentType === 'SEA_FCL') {
+                const rows = document.querySelectorAll('#fclVehicleTableBody tr');
+                vehicleCount = rows.length;
+                rows.forEach((row, index) => {
+                    const vehicleNo = document.getElementById(`fcl-vehicle-no-${row.id.split('-')[3]}`).value;
+                    vehicleData.push({ sno: index + 1, vehicleNumber: vehicleNo });
+                });
+            } else if (shipmentType === 'SEA_LCL') {
+                const rows = document.querySelectorAll('#lclVehicleTableBody tr');
+                vehicleCount = rows.length;
+                rows.forEach((row, index) => {
+                    const vehicleNo = document.getElementById(`lcl-vehicle-no-${row.id.split('-')[3]}`).value;
+                    vehicleData.push({ sno: index + 1, vehicleNumber: vehicleNo });
+                });
+            } else if (shipmentType === 'AIR') {
+                const rows = document.querySelectorAll('#airVehicleTableBody tr');
+                vehicleCount = rows.length;
+                rows.forEach((row, index) => {
+                    const vehicleNo = document.getElementById(`air-vehicle-no-${row.id.split('-')[3]}`).value;
+                    vehicleData.push({ sno: index + 1, vehicleNumber: vehicleNo });
+                });
+            }
+
+            console.log('Shipment Type:', shipmentType);
+            console.log('Vehicle Data:', vehicleData);
+            
+            alert(`✅ Vendor Data Submitted Successfully!\n\nShipment Type: ${shipmentType}\nTotal Vehicles: ${vehicleCount}`);
+        }
+
+         function showSelectedCurrency() {
+            const select = document.getElementById('currencySelect');
+            const selectedOption = select.options[select.selectedIndex];
+            const currencyValue = selectedOption.value;
+            
+            if (currencyValue) {
+                const currencySymbol = selectedOption.getAttribute('data-symbol');
+                const currencyText = selectedOption.text;
+                
+                // Show the selected currency
+                document.getElementById('currencySymbol').textContent = currencySymbol;
+                document.getElementById('currencyCode').textContent = currencyValue;
+                document.getElementById('currencyName').textContent = currencyText.split(' - ')[1];
+                document.getElementById('selectedCurrency').classList.add('show');
+                
+                console.log('Selected Currency:', currencyValue);
+                console.log('Currency Symbol:', currencySymbol);
+                
+                // You can save this to database or use it in your application
+                // Example: saveCurrency(currencyValue);
+            } else {
+                document.getElementById('selectedCurrency').classList.remove('show');
+            }
+        }
+
+function addRow(type) {
+    const container = document.getElementById(type + "Rows");
+
+    const row = document.createElement("div");
+    row.style.display = "flex";
+    row.style.alignItems = "center";
+    row.style.gap = "6px";
+    row.style.marginBottom = "6px";
+
+    row.innerHTML = `
+        <label style="min-width:100px;">Container Type</label>
+
+        <select style="padding:4px; font-size:13px;">
+            <option value="">Select Container Type</option>
+            <option>20 ft – 10 Ton</option>
+            <option>24 ft – 12 Ton</option>
+            <option>28 ft – 14 Ton</option>
+            <option>32 ft – 15 Ton</option>
+            <option>40 ft – 20 Ton</option>
+        </select>
+
+        <button type="button" onclick="addRow('${type}')" 
+            style="padding:3px 8px;font-size:12px;">+</button>
+
+        <button type="button" onclick="this.parentElement.remove()" 
+            style="padding:3px 8px;font-size:12px;">×</button>
+    `;
+
+    container.appendChild(row);
+}
+
+/* default first row */
+addRow('fcl');
+addRow('fclpnr');
+addRow('lcl');
+addRow('air');
+
+    // ==================== FCL PNR ENTRY ====================
+let fclRowCount = 0;
+
+function addFclRow() {
+    fclRowCount++;
+
+    const tbody = document.getElementById("fclPnrBody");
+
+    const tr = document.createElement("tr");
+
+    tr.innerHTML = `
+        <td>${fclRowCount}</td>
+        <td><input></td>
+        <td><input></td>
+        <td><input></td>
+        <td><input type="date"></td>
+        <td><input></td>
+        <td><input></td>
+        <td>
+            <select>
+                <option>20 ft – 10 Ton</option>
+                <option>32 ft – 15 Ton</option>
+                <option>40 ft – 20 Ton</option>
+                <option>45 ft – 25 Ton</option>
+            </select>
+        </td>
+        <td><input></td>
+        <td>
+            <select>
+                <option>DPD</option>
+                <option>CFS</option>
+            </select>
+        </td>
+        <td><input></td>
+        <td>
+            <button onclick="this.closest('tr').remove()" style="color:red">
+                Remove
+            </button>
+        </td>
+    `;
+
+    tbody.appendChild(tr);
+}
+
+function addContainer(type) {
+  const select = document.getElementById(type + "Select");
+  const value = select.value;
+
+  if (!value) return;
+
+  const row = document.createElement("div");
+  row.style.display = "flex";
+  row.style.justifyContent = "space-between";
+  row.style.alignItems = "center";
+  row.style.marginBottom = "5px";
+  row.style.maxWidth = "400px";
+
+  row.innerHTML = `
+    <span>${value}</span>
+    <button type="button" onclick="this.parentElement.remove()">Remove</button>
+  `;
+
+  document.getElementById(type + "List").appendChild(row);
+  select.value = "";
+}
+
+</script>
+</body>
+</html>

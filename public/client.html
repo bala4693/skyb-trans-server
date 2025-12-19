@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Client - SKYB TRANS</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<style>
+    </style>
+<body>
+
+ <a href="dashboard.html" class="btn green">Back to Dashboard</a>
+
+<div class="container">
+
+  <h3 class="section-title">Basic Information</h3>
+  <hr>
+
+  <div class="row">
+    <div class="field">
+      <label>Company Name <span>*</span></label>
+      <input type="text" placeholder="Enter Company">
+    </div>
+    <div class="field">
+      <label>Company Email <span>*</span></label>
+      <input type="email" placeholder="Enter Email">
+    </div>
+    <div class="field">
+      <label>Phone Number <span>*</span></label>
+      <input type="text" placeholder="Enter Phone Number">
+    </div>
+    <div class="field">
+      <label>Address Line 1 <span>*</span></label>
+      <textarea placeholder="Enter Address Line 1"></textarea>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="field">
+      <label>Address Line 2</label>
+      <textarea></textarea>
+    </div>
+    <div class="field">
+      <label>City <span>*</span></label>
+      <input type="text" placeholder="Enter City">
+    </div>
+    <div class="field">
+      <label>State <span>*</span></label>
+      <select>
+        <option>--Select--</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Country <span>*</span></label>
+      <select>
+        <option>--Select--</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Postal / Zip Code <span>*</span></label>
+      <input type="text" placeholder="Enter Postal / Zip Code">
+    </div>
+  </div>
+
+  <h3 class="section-title">Document Details</h3>
+  <hr>
+
+  <div class="row">
+    <div class="field">
+      <label>GST Details <span>*</span></label>
+      <div class="radio">
+        <input type="radio" checked> Yes
+        <input type="radio"> No
+      </div>
+    </div>
+    <div class="field">
+      <label>GST Number <span>*</span></label>
+      <input type="text" placeholder="ENTER GST NUMBER">
+    </div>
+    <div class="field">
+      <label>GST Certificate <span>*</span></label>
+      <input type="file">
+    </div>
+    <div class="field">
+      <label>PAN Number <span>*</span></label>
+      <input type="text" placeholder="ENTER PAN NUMBER">
+    </div>
+    <div class="field">
+      <label>PAN Card <span>*</span></label>
+      <input type="file">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="field">
+      <label>SME/MSME</label>
+      <input type="text" placeholder="ENTER SEM OR MSME">
+    </div>
+    <div class="field">
+      <label>SME/MSME</label>
+      <input type="file">
+    </div>
+    <div class="field">
+      <label>TIN/TAN</label>
+      <input type="text" placeholder="ENTER TIN OR TAN NUMBER">
+    </div>
+    <div class="field">
+      <label>TIN/TAN</label>
+      <input type="file">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="field">
+      <label>ROC</label>
+      <input type="file">
+    </div>
+    
+    
+            <div class="form-grid">
+                <div class="form-field sales-person-field">
+                    <label>Sales Person <span style="color: red;">*</span></label>
+                    <input 
+                        type="text" 
+                        id="fclSalesPerson" 
+                        placeholder="Type to search sales person" 
+                        autocomplete="off"
+                        oninput="searchSalesPerson('fcl')"
+                        onfocus="searchSalesPerson('fcl')">
+                    <div id="fclSuggestionsBox" class="suggestions-box"></div>
+                </div>
+            </div>
+    <div class="field">
+      <label>Others</label>
+      <input type="file">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="field">
+      <label>Status <span>*</span></label>
+      <select>
+        <option>--Select--</option>
+      </select>
+    </div>
+  </div>
+
+  <button class="back-btn">← Back</button>
+
+</div>
+
+ <script>
+        // ==================== SALES PERSON DATA ====================
+        const salesPersons = [
+            { code: "M K", name: "M. Kalyani" },
+            { code: "R S", name: "R. Suresh" },
+            { code: "P V", name: "P. Vijay" },
+            { code: "S M", name: "S. Meena" },
+            { code: "A R", name: "A. Ramesh" },
+            { code: "K P", name: "K. Priya" },
+            { code: "N S", name: "N. Srinivas" },
+            { code: "D K", name: "D. Kumar" },
+            { code: "L M", name: "L. Malini" },
+            { code: "V R", name: "V. Ravi" },
+            { code: "B S", name: "B. Selvam" },
+            { code: "T N", name: "T. Nagesh" },
+            { code: "G K", name: "G. Karthik" },
+            { code: "H P", name: "H. Prakash" },
+            { code: "J R", name: "J. Rajesh" },
+            { code: "I S", name: "I. Saravanan" },
+            { code: "C V", name: "C. Vignesh" },
+            { code: "E M", name: "E. Murugan" },
+            { code: "F K", name: "F. Kavitha" },
+            { code: "W R", name: "W. Raman" },
+            { code: "Y S", name: "Y. Senthil" },
+            { code: "Z K", name: "Z. Keerthana" },
+            { code: "U M", name: "U. Mahesh" },
+            { code: "O P", name: "O. Prabhu" },
+            { code: "Q R", name: "Q. Ramya" },
+            { code: "X S", name: "X. Sakthivel" },
+            { code: "AA K", name: "A. Arun Kumar" },
+            { code: "AB M", name: "A. Bharathi Mani" },
+            { code: "AC R", name: "A. Chandru Raj" },
+            { code: "AD S", name: "A. Divya Shree" }
+        ];
+
+        // ==================== SALES PERSON SEARCH ====================
+        function searchSalesPerson(type) {
+            const input = document.getElementById(type + 'SalesPerson');
+            const suggestionsBox = document.getElementById(type + 'SuggestionsBox');
+            
+            if (!input || !suggestionsBox) return;
+            
+            const searchTerm = input.value.toLowerCase().trim();
+
+            if (searchTerm === '') {
+                suggestionsBox.style.display = 'none';
+                return;
+            }
+
+            const filtered = salesPersons.filter(person => {
+                const code = person.code.toLowerCase();
+                const name = person.name.toLowerCase();
+                return code.includes(searchTerm) || name.includes(searchTerm);
+            });
+
+            if (filtered.length > 0) {
+                let html = '';
+                filtered.forEach(person => {
+                    html += `
+                        <div class="suggestion-item" onclick="selectSalesPerson('${type}', '${person.code}', '${person.name}')">
+                            <span class="suggestion-initial">${person.code}</span>
+                            <span>- ${person.name}</span>
+                        </div>
+                    `;
+                });
+                suggestionsBox.innerHTML = html;
+                suggestionsBox.style.display = 'block';
+            } else {
+                suggestionsBox.innerHTML = '<div class="no-results">No sales person found</div>';
+                suggestionsBox.style.display = 'block';
+            }
+        }
+
+        function selectSalesPerson(type, code, name) {
+            const input = document.getElementById(type + 'SalesPerson');
+            const suggestionsBox = document.getElementById(type + 'SuggestionsBox');
+            
+            if (input && suggestionsBox) {
+                input.value = code + ' - ' + name;
+                suggestionsBox.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
