@@ -5,51 +5,89 @@
   <title>Dashboard</title>
   <link rel="stylesheet" href="/style.css">
 </head>
+<style>
+.availability-list {
+    list-style: none;
+    padding: 0;
+}
+.availability-list li {
+    padding: 8px 12px;
+    margin-bottom: 6px;
+    background: #f4f6f8;
+    border-radius: 4px;
+}
+</style>
 <body>
 
 <div class="top-bar">
   <a href="login.html">Back to Login page</a>
 </div>
 
-<div class="dashboard-card">
-  <h2>Dashboard</h2> 
+  <!-- Dashboard Card -->
+  <div class="dashboard-wrapper">
+    <div class="dashboard-card">
+      <h2>Dashboard</h2>
+        <button class="btn client" onclick="window.location.href='client.html'">Client</button>
+        <button class="btn client" onclick="window.location.href='client creation.html'">Client Creation</button>
+        <button class="btn vendor" onclick="window.location.href='vendor.html'">Vendor</button>
+        <button class="btn vendor" onclick="window.location.href='vendor creation.html'">Vendor Creation</button>
+    </div>
+  </div>
+
+  <!-- Booking Headers -->
+  <div class="booking-header">
+    <div class="booking-pill export">FCL</div>
+    <div class="booking-pill import">LCL / TRUCK</div>
+  </div>
+
+<!-- FCL + LCL COMMON CONTAINER -->
+<div class="booking-export-common">
+
+  <div class="fcl-lcl-layout">
+
+    <!-- LEFT : FCL -->
+    <div class="fcl-side" id="fclSection">
+      <h3 class="section-title">FCL – Available Containers</h3>
+
+      
+    <div class="fcl-cards">
+    <div class="card import">
+    <h4>Import</h4>
+    <p>Available 20 ft Containers</p>
+    <strong>10</strong>
+  </div>
   
-  <a href="/client.html">Client</a> 
-  <a href="/client creation.html">Client Creation</a>
-  <a href="/vendor.html">Vendor</a>
-  <a href="/vendor creation.html">Vendor Creation</a>
-</div>
-
-<div class="booking">
-  <div class="booking-title">FCL</div>
-  <div class="booking-title">LCL / TRUCK</div>
-</div>
-
-<div class="cards">
-
-  <div class="card export">
-    <h4>Export</h4>
-    <p>Available 20 ft Containers</p>
-    <strong>1</strong>
-  </div>
-
-  <div class="card import">
-    <h4>Import</h4>
-    <p>Available 20 ft Containers</p>
-    <strong>10</strong>
-  </div>
-
   <div class="card export">
     <h4>Export</h4>
     <p>Available 40 ft Containers</p>
     <strong>1</strong>
   </div>
+      </div>
+    </div>
 
-  <div class="card import">
-    <h4>Import</h4>
-    <p>Available 40 ft Containers</p>
-    <strong>10</strong>
+    <!-- RIGHT : LCL -->
+    <div class="lcl-side">
+
+      <div class="form-field">
+        <label>Truck Availability</label>
+        <select>
+          <option value="">-- Select Truck Type --</option>
+          <option>20 FEET – 10 Ton</option>
+          <option>22 FEET – 12 Ton</option>
+          <option>24 FEET – 14 Ton</option>
+          <option>28 FEET – 15 Ton</option>
+          <option>32 FEET – 15 Ton</option>
+          <option>32 FEET – 18 Ton</option>
+          <option>40 FEET – 20 Ton</option>
+          <option>40 FEET – 22 Ton</option>
+          <option>40 FEET – 25 Ton</option>
+        </select>
+      </div>
+    </div>
+
   </div>
+
+</div>
 
 </div>
 </body>
