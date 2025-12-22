@@ -258,41 +258,6 @@
     <div class="container">
         <h2>Vendor Registration</h2>
         
-        <div class="map-section">
-            <h3>📍 Select Empty Yard Location on Map</h3>
-            
-            <input 
-                id="searchBox" 
-                class="search-box" 
-                type="text" 
-                placeholder="🔍 Search location (e.g., Chennai Port, Ennore, Kattupalli)..."
-            >
-
-            <div class="quick-locations">
-                <button class="quick-btn" onclick="goToLocation(13.0827, 80.2707, 'Chennai')">📍 Chennai Port</button>
-                <button class="quick-btn" onclick="goToLocation(13.2097, 80.3060, 'Ennore')">📍 Ennore Port</button>
-                <button class="quick-btn" onclick="goToLocation(13.4413, 80.1589, 'Kattupalli')">📍 Kattupalli Port</button>
-                <button class="quick-btn" onclick="goToLocation(8.7642, 78.1348, 'Tuticorin')">📍 Tuticorin Port</button>
-                <button class="quick-btn" onclick="goToLocation(9.9312, 76.2673, 'Cochin')">📍 Cochin Port</button>
-                <button class="quick-btn" onclick="goToLocation(19.0176, 72.8856, 'Mumbai')">📍 Mumbai Port</button>
-                <button class="quick-btn" onclick="goToLocation(17.6868, 83.2185, 'Vizag')">📍 Vizag Port</button>
-            </div>
-            
-            <div id="map"></div>
-            
-            <div class="coordinates">
-                <div class="form-group">
-                    <label>Latitude</label>
-                    <input type="text" id="latitude" readonly placeholder="Click on map to get coordinates">
-                </div>
-                <div class="form-group">
-                    <label>Longitude</label>
-                    <input type="text" id="longitude" readonly placeholder="Click on map to get coordinates">
-                </div>
-            </div>
-            
-            <p class="info-text">💡 Click on the map, drag the red marker, or use quick location buttons above</p>
-        </div>
 
         <form id="vendorForm">
             <div class="form-group">
@@ -324,178 +289,235 @@
         </form>
     </div>
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script>
-        let map, marker;
-
-        // Major Indian Ports and Empty Yards
-        const vendorLocations = [
-            { name: 'Chennai Port', lat: 13.0827, lng: 80.2707 },
-            { name: 'Ennore Port', lat: 13.2097, lng: 80.3060 },
-            { name: 'Kattupalli Port', lat: 13.4413, lng: 80.1589 },
-            { name: 'Tuticorin Port', lat: 8.7642, lng: 78.1348 },
-            { name: 'Cochin Port', lat: 9.9312, lng: 76.2673 },
-            { name: 'Vallarpadam Port', lat: 9.9672, lng: 76.2820 },
-            { name: 'Mumbai Port', lat: 18.9388, lng: 72.8354 },
-            { name: 'Nhava Sheva Port', lat: 18.9520, lng: 72.9486 },
-            { name: 'Vizag Port', lat: 17.6868, lng: 83.2185 },
-            { name: 'Kolkata Port', lat: 22.5726, lng: 88.3639 },
-            { name: 'Mundra Port', lat: 22.8392, lng: 69.7221 },
-            { name: 'Mangalore Port', lat: 12.9141, lng: 74.8560 }
-        ];
-
-        // Initialize map
-        function initMap() {
-            // Default location: India (centered to show all ports)
-            const defaultLat = 20.5937;
-            const defaultLng = 78.9629;
-
-            // Create map centered on India
-            map = L.map('map').setView([defaultLat, defaultLng], 5);
-
-            // Add OpenStreetMap tiles
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap contributors',
-                maxZoom: 19
-            }).addTo(map);
-
-            // Add markers for all vendor locations
-            vendorLocations.forEach(location => {
-                L.circleMarker([location.lat, location.lng], {
-                    radius: 6,
-                    fillColor: "#2196f3",
-                    color: "#1565c0",
-                    weight: 2,
-                    opacity: 1,
-                    fillOpacity: 0.8
-                }).addTo(map).bindPopup(`<b>${location.name}</b>`);
-            });
-
-            // Add main draggable marker (red)
-            marker = L.marker([13.0827, 80.2707], {
-                draggable: true,
-                icon: L.icon({
-                    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-                    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-                    iconSize: [25, 41],
-                    iconAnchor: [12, 41],
-                    popupAnchor: [1, -34],
-                    shadowSize: [41, 41]
-                })
-            }).addTo(map).bindPopup('Your Selected Location');
-
-            // Update coordinates when marker is dragged
-            marker.on('dragend', function(e) {
-                const position = marker.getLatLng();
-                updateCoordinates(position.lat, position.lng);
-            });
-
-            // Add marker on map click
-            map.on('click', function(e) {
-                marker.setLatLng(e.latlng);
-                updateCoordinates(e.latlng.lat, e.latlng.lng);
-            });
-
-            // Initial coordinates
-            updateCoordinates(13.0827, 80.2707);
-
-            // Add legend
-            const legend = L.control({position: 'bottomright'});
-            legend.onAdd = function() {
-                const div = L.DomUtil.create('div', 'legend');
-                div.innerHTML = `
-                    <div class="legend-item">🔴 Your Selected Location</div>
-                    <div class="legend-item">🔵 Major Ports</div>
-                `;
-                return div;
-            };
-            legend.addTo(map);
-        }
-
-        // Update coordinate inputs
-        function updateCoordinates(lat, lng) {
-            document.getElementById('latitude').value = lat.toFixed(6);
-            document.getElementById('longitude').value = lng.toFixed(6);
-        }
-
-        // Quick location buttons
-        function goToLocation(lat, lng, name) {
-            map.setView([lat, lng], 13);
-            marker.setLatLng([lat, lng]);
-            updateCoordinates(lat, lng);
-            marker.openPopup();
-        }
-
-        // Search functionality
-        const searchBox = document.getElementById('searchBox');
-        let searchTimeout;
-
-        searchBox.addEventListener('input', function() {
-            clearTimeout(searchTimeout);
-            const query = this.value.trim().toLowerCase();
-            
-            if (query.length < 2) return;
-
-            // Search in vendor locations first
-            const found = vendorLocations.find(loc => 
-                loc.name.toLowerCase().includes(query)
-            );
-
-            if (found) {
-                goToLocation(found.lat, found.lng, found.name);
-                return;
-            }
-
-            // Otherwise search using Nominatim
-            searchTimeout = setTimeout(() => {
-                searchLocation(query);
-            }, 500);
-        });
-
-        // Search location using Nominatim (OpenStreetMap)
-        async function searchLocation(query) {
-            try {
-                const response = await fetch(
-                    `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query + ' India')}&limit=1`
-                );
-                const data = await response.json();
-
-                if (data && data.length > 0) {
-                    const result = data[0];
-                    const lat = parseFloat(result.lat);
-                    const lng = parseFloat(result.lon);
-
-                    map.setView([lat, lng], 15);
-                    marker.setLatLng([lat, lng]);
-                    updateCoordinates(lat, lng);
-                }
-            } catch (error) {
-                console.error('Search error:', error);
-            }
-        }
-
-        // Form submission
-        document.getElementById('vendorForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const vendorData = {
-                vendorName: document.getElementById('vendorName').value,
-                contactPerson: document.getElementById('contactPerson').value,
-                mobile: document.getElementById('mobile').value,
-                email: document.getElementById('email').value,
-                address: document.getElementById('address').value,
-                latitude: document.getElementById('latitude').value,
-                longitude: document.getElementById('longitude').value
-            };
-
-            console.log('Vendor Data:', vendorData);
-            alert('✅ Vendor Created Successfully!\n\nVendor: ' + vendorData.vendorName + '\nLocation: ' + vendorData.latitude + ', ' + vendorData.longitude);
-        });
-
-        // Initialize map when page loads
-        window.onload = initMap;
-    </script>
 </body>
 </html>
 
 
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Vendor / Rate Entry</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f6f8;
+  padding: 20px;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+.section {
+  background: #fff;
+  padding: 20px;
+  border-radius: 6px;
+  margin-bottom: 25px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.form-field label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: block;
+}
+
+input, select {
+  width: 100%;
+  height: 40px;
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.hidden {
+  display: none;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+th {
+  background: #2f5ea7;
+  color: #fff;
+  padding: 10px;
+  font-size: 14px;
+}
+
+td {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+.vehicle-total {
+  background: #eef3ff;
+  font-weight: bold;
+}
+
+.note {
+  font-size: 13px;
+  color: #666;
+}
+</style>
+</head>
+
+<body>
+
+<h2>Vendor / Rate Entry</h2>
+
+<!-- SHIPMENT TYPE -->
+<div class="section">
+  <div class="form-row">
+    <div class="form-field">
+      <label>Shipment Type</label>
+      <select id="shipmentType">
+        <option value="">-- Select --</option>
+        <option value="FCL">Sea Shipment - FCL</option>
+        <option value="FCL_PNR">Sea Shipment - FCL PNR</option>
+        <option value="LCL">Sea Shipment - LCL</option>
+        <option value="AIR">Air Shipment</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- COMMON RATE SECTION -->
+<div id="rateSection" class="section hidden">
+  <div class="form-row">
+    <div class="form-field">
+      <label>No. of Containers / Units</label>
+      <input type="number" id="qty" placeholder="ex: 2">
+    </div>
+
+    <div class="form-field">
+      <label>Rate Per Unit (₹)</label>
+      <input type="number" id="rate" placeholder="ex: 10000">
+    </div>
+
+    <div class="form-field">
+      <label>Total Amount (₹)</label>
+      <input type="number" id="grandTotal" readonly>
+    </div>
+  </div>
+
+  <p class="note">
+    * FCL / LCL / AIR → Total auto calculated<br>
+    * FCL PNR → Manual entry
+  </p>
+</div>
+
+<!-- VEHICLE DETAILS -->
+<div id="vehicleSection" class="section hidden">
+  <h3>Vehicle Details Entry</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>S.No</th>
+        <th>Vehicle No</th>
+        <th>Capacity</th>
+        <th>Length</th>
+        <th>Pickup</th>
+        <th>Delivery</th>
+        <th>Total Amount (₹)</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td><input type="text" placeholder="TN 01 AB 1234"></td>
+        <td>
+          <select>
+            <option>-- Select --</option>
+            <option>10 Ton</option>
+            <option>15 Ton</option>
+            <option>20 Ton</option>
+          </select>
+        </td>
+        <td>
+          <select>
+            <option>-- Select --</option>
+            <option>20 ft</option>
+            <option>32 ft</option>
+            <option>40 ft</option>
+          </select>
+        </td>
+        <td><input type="text"></td>
+        <td><input type="text"></td>
+        <td>
+          <input type="number" class="vehicle-total" readonly>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<script>
+const shipmentType = document.getElementById("shipmentType");
+const rateSection = document.getElementById("rateSection");
+const vehicleSection = document.getElementById("vehicleSection");
+
+const qtyInput = document.getElementById("qty");
+const rateInput = document.getElementById("rate");
+const grandTotal = document.getElementById("grandTotal");
+
+function updateUI() {
+  const type = shipmentType.value;
+
+  if (!type) {
+    rateSection.classList.add("hidden");
+    vehicleSection.classList.add("hidden");
+    return;
+  }
+
+  rateSection.classList.remove("hidden");
+  vehicleSection.classList.remove("hidden");
+
+  if (type === "FCL_PNR") {
+    grandTotal.removeAttribute("readonly");
+    document.querySelector(".vehicle-total").removeAttribute("readonly");
+  } else {
+    grandTotal.setAttribute("readonly", true);
+    document.querySelector(".vehicle-total").setAttribute("readonly", true);
+  }
+
+  calculateTotal();
+}
+
+function calculateTotal() {
+  const type = shipmentType.value;
+
+  if (type === "FCL_PNR") return;
+
+  const qty = Number(qtyInput.value);
+  const rate = Number(rateInput.value);
+
+  if (!qty || !rate) return;
+
+  const total = qty * rate;
+  grandTotal.value = total;
+  document.querySelector(".vehicle-total").value = total;
+}
+
+shipmentType.addEventListener("change", updateUI);
+qtyInput.addEventListener("input", calculateTotal);
+rateInput.addEventListener("input", calculateTotal);
+</script>
+
+</body>
+</html>

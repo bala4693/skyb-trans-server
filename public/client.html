@@ -141,6 +141,11 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+.form-field.full-width {
+    grid-column: 1 / -1;   /* full row */
+}
+
 </style>
 </head>
 
@@ -267,6 +272,7 @@ body {
     <input type="file">
   </div>
 
+
   <!-- SALES PERSON -->
   <div class="form-field">
     <label>Sales Person *</label>
@@ -285,6 +291,18 @@ body {
   </div>
 </div>
 
+<div class="form-row">
+<div class="form-field">
+    <label>cost / price</label>
+    <input type="text" id="clientCost">
+  </div>
+<div class="form-field">
+    <label>Total Cost (₹)</label>
+    <input type="text" id="clientTotalCost" readonly>
+</div>
+
+
+
 <div class="form-row full">
   <div class="form-field">
     <label>Status *</label>
@@ -296,13 +314,13 @@ body {
   </div>
 </div>
 
+
 <div class="form-actions">
   <button>← Back</button>
 </div>
-
 </div>
 
-<!-- SCRIPT -->
+
 <script>
 const salesPersons = [
   "Manoj Kumar",
@@ -351,6 +369,16 @@ document.addEventListener("click", e => {
     list.style.display = "none";
   }
 });
+
+
+
+  const clientCostInput = document.getElementById("clientCost");
+  const clientTotalCostInput = document.getElementById("clientTotalCost");
+
+  clientCostInput.addEventListener("input", () => {
+    const cost = Number(clientCostInput.value);
+    clientTotalCostInput.value = cost ? cost : "";
+  });
 </script>
 
 </body>

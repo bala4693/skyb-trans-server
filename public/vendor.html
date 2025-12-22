@@ -550,16 +550,18 @@
         </select>
           </div>
 
-            <div class="form-field">
-                <label>Shipment Type</label>
-                <select id="shipmentType" onchange="changeShipmentType(this.value)">
-                    <option value="">Select Shipment Type</option>
-                    <option value="SEA_FCL">Sea Shipment - FCL</option>
-                    <option value="FCL">FCL PNR</option>
-                    <option value="SEA_LCL">Sea Shipment - LCL</option>
-                    <option value="AIR">Air Shipment</option>
-                </select>
-            </div>
+        
+  <div class="form-field">
+    <label>Shipment Type</label>
+   <select id="shipmentType">
+  <option value="">-- Select --</option>
+  <option value="FCL">Sea Shipment - FCL</option>
+  <option value="FCL_PNR">Sea Shipment - FCL PNR</option>
+  <option value="LCL">Sea Shipment - LCL</option>
+  <option value="AIR">Air Shipment</option>
+</select>
+
+  </div>
 
             <div class="form-field">
                 <label>Vehicle Availability</label>
@@ -620,12 +622,13 @@
 
                 <div class="form-field">
                     <label>No. of Containers</label>
-                    <input type="number" placeholder="ex: 1">
+                    <input type="number" id="noOfContainers" placeholder="ex: 1">
+
                 </div>
 
                 <div class="form-field">
                     <label>Rate Per Container (₹)</label>
-                    <input type="number" placeholder="Enter Rate">
+                    <input type="number" id="ratePerContainer" placeholder="Enter Rate">
                 </div>
             </div>
 
@@ -646,7 +649,7 @@
                             <th style="width: 120px;">Truck Length</th>
                             <th style="width: 180px;">Pickup Point</th>
                             <th style="width: 180px;">Delivery Point</th>
-                            <th style="width: 120px;">Total Amount (₹)</th>
+                            <th style="width: 150px;">Total Amount</th>
                             <th style="width: 100px; text-align: center;">Action</th>
                         </tr>
                     </thead>
@@ -1211,29 +1214,66 @@
         });
 
         // ==================== SHIPMENT TYPE TOGGLE ====================
-        function changeShipmentType(value) {
-            const seaFclSection = document.getElementById("seaFclSection");
-            const fclPnrSection = document.getElementById("fclPnrSection");
-            const seaLclSection = document.getElementById("seaLclSection");
-            const airSection = document.getElementById("airSection");
-            
-            // Hide all sections
-            seaFclSection.style.display = "none";
-            fclPnrSection.style.display = "none";
-            seaLclSection.style.display = "none";
-            airSection.style.display = "none";
 
-            // Show selected section
-            if (value === "SEA_FCL") {
-                seaFclSection.style.display = "block";
-            } else if (value === "FCL") {
-                fclPnrSection.style.display = "block";
-            } else if (value === "SEA_LCL") {
-                seaLclSection.style.display = "block";
-            } else if (value === "AIR") {
-                airSection.style.display = "block";
-            }
-        }
+document.addEventListener("DOMContentLoaded", () => {
+
+  const shipmentTypeEl = document.getElementById("shipmentType");
+  const containerEl = document.getElementById("noOfContainers");
+  const rateEl = document.getElementById("ratePerContainer");
+
+  const seaFclSection = document.getElementById("seaFclSection");
+  const seaLclSection = document.getElementById("seaLclSection");
+  const airSection    = document.getElementById("airSection");
+  const fclPnrSection = document.getElementById("fclPnrSection");
+
+  function hideAll() {
+    seaFclSection.style.display = "none";
+    seaLclSection.style.display = "none";
+    airSection.style.display = "none";
+    fclPnrSection.style.display = "none";
+  }
+
+  window.updateVehicleTotal = function () {
+    const shipmentType = shipmentTypeEl.value;
+    const containers = Number(containerEl.value);
+    const rate = Number(rateEl.value);
+    const totals = document.querySelectorAll(".vehicle-total");
+
+    // 🔴 FCL PNR – MANUAL
+    if (shipmentType === "FCL_PNR") {
+      hideAll();
+      fclPnrSection.style.display = "block";
+
+      totals.forEach(t => {
+        t.value = "";
+        t.removeAttribute("readonly");
+      });
+      return;
+    }
+
+    // 🟢 FCL / LCL / AIR
+    hideAll();
+    if (shipmentType === "FCL") seaFclSection.style.display = "block";
+    if (shipmentType === "LCL") seaLclSection.style.display = "block";
+    if (shipmentType === "AIR") airSection.style.display = "block";
+
+    if (!containers || !rate) return;
+
+    const total = containers * rate;
+
+    totals.forEach(t => {
+      t.value = total;
+      t.setAttribute("readonly", true);
+    });
+  };
+
+  shipmentTypeEl.addEventListener("change", updateVehicleTotal);
+  containerEl.addEventListener("input", updateVehicleTotal);
+  rateEl.addEventListener("input", updateVehicleTotal);
+
+  hideAll();
+});
+
 
         // ==================== LCL CALCULATIONS ====================
         function updateLCLUnits() {
@@ -1348,103 +1388,73 @@
         }
 
         // ==================== FCL VEHICLE ENTRY ====================
-        let fclVehicleCounter = 0;
+     
+let fclVehicleIndex = 0;
 
-        function addFclVehicleRow() {
-            fclVehicleCounter++;
-            const tbody = document.getElementById('fclVehicleTableBody');
-            const row = document.createElement('tr');
-            row.id = `fcl-vehicle-row-${fclVehicleCounter}`;
-            
-            row.innerHTML = `
-                <td>${fclVehicleCounter}</td>
-                <td>
-                    <input type="text" 
-                           class="vehicle-input"
-                           id="fcl-vehicle-no-${fclVehicleCounter}" 
-                           placeholder="e.g., TN 01 AB 1234">
-                </td>
-                <td>
-                    <select class="vehicle-input" id="fcl-weight-capacity-${fclVehicleCounter}">
-                        <option value="">-- Select --</option>
-                        <option value="1ton">1 Ton</option>
-                        <option value="3ton">3 Ton</option>
-                        <option value="5ton">5 Ton</option>
-                        <option value="7ton">7 Ton</option>
-                        <option value="10ton">10 Ton</option>
-                        <option value="12ton">12 Ton</option>
-                        <option value="15ton">15 Ton</option>
-                        <option value="20ton">20 Ton</option>
-                    </select>
-                </td>
-                <td>
-                    <select class="vehicle-input" id="fcl-truck-length-${fclVehicleCounter}">
-                        <option value="">-- Select --</option>
-                        <option value="10feet">10 Feet</option>
-                        <option value="12feet">12 Feet</option>
-                        <option value="14feet">14 Feet</option>
-                        <option value="17feet">17 Feet</option>
-                        <option value="19feet">19 Feet</option>
-                        <option value="20feet">20 Feet</option>
-                        <option value="32feet">32 Feet</option>
-                        <option value="40feet">40 Feet</option>
-                    </select>
-                </td>
-                <td>
-                    <input type="text" 
-                           class="vehicle-input"
-                           id="fcl-pickup-point-${fclVehicleCounter}" 
-                           placeholder="Enter Pickup Point">
-                </td>
-                <td>
-                    <input type="text" 
-                           class="vehicle-input"
-                           id="fcl-delivery-point-${fclVehicleCounter}" 
-                           placeholder="Enter Delivery Point">
-                </td>
-                <td>
-                    <input type="number" 
-                           class="vehicle-input"
-                           id="fcl-total-amount-${fclVehicleCounter}" 
-                           placeholder="Enter Amount">
-                </td>
-                <td style="text-align: center;">
-                    <button type="button" 
-                            class="remove-btn"
-                            onclick="removeFclVehicleRow(${fclVehicleCounter})">
-                        Remove
-                    </button>
-                </td>
-            `;
-            
-            tbody.appendChild(row);
-            updateFclVehicleCount();
-        }
+function addFclVehicleRow() {
+  fclVehicleIndex++;
 
-        function removeFclVehicleRow(id) {
-            const row = document.getElementById(`fcl-vehicle-row-${id}`);
-            if (row) {
-                row.remove();
-                updateFclVehicleCount();
-                renumberFclVehicles();
-            }
-        }
+  const tbody = document.getElementById("fclVehicleTableBody");
 
-        function renumberFclVehicles() {
-            const rows = document.querySelectorAll('#fclVehicleTableBody tr');
-            rows.forEach((row, index) => {
-                const firstCell = row.querySelector('td:first-child');
-                if (firstCell) {
-                    firstCell.textContent = index + 1;
-                }
-            });
-        }
+  const row = document.createElement("tr");
+  row.innerHTML = `
+    <td>${fclVehicleIndex}</td>
 
-        function updateFclVehicleCount() {
-            const count = document.querySelectorAll('#fclVehicleTableBody tr').length;
-            document.getElementById('fclVehicleCount').textContent = count;
-        }
+    <td>
+      <input type="text" placeholder="e.g., TN 01 AB 1234">
+    </td>
 
+    <td>
+      <select>
+        <option>-- Select --</option>
+        <option>10 Ton</option>
+        <option>15 Ton</option>
+        <option>20 Ton</option>
+      </select>
+    </td>
+
+    <td>
+      <select>
+        <option>-- Select --</option>
+        <option>20 ft</option>
+        <option>24 ft</option>
+        <option>32 ft</option>
+        <option>40 ft</option>
+      </select>
+    </td>
+
+    <td>
+      <input type="text" placeholder="Enter Pickup Point">
+    </td>
+
+    <td>
+      <input type="text" placeholder="Enter Delivery Point">
+    </td>
+
+    <td>
+      <!-- 🔥 THIS IS IMPORTANT -->
+      <input type="number" class="vehicle-total" placeholder="Total Amount">
+    </td>
+
+    <td style="text-align:center;">
+      <button onclick="removeVehicleRow(this)">Remove</button>
+    </td>
+  `;
+
+  tbody.appendChild(row);
+  updateVehicleCount();
+  updateVehicleTotal(); // 👈 auto calculate when row added
+}
+
+function removeVehicleRow(btn) {
+  btn.closest("tr").remove();
+  updateVehicleCount();
+}
+
+function updateVehicleCount() {
+  document.getElementById("fclVehicleCount").innerText =
+    document.querySelectorAll("#fclVehicleTableBody tr").length;
+}
         // ==================== LCL VEHICLE ENTRY ====================
         let lclVehicleCounter = 0;
 

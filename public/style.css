@@ -377,3 +377,7 @@ body {
 .lcl-side {
   width: 50%;
 }
+
+.form-field.full-width {
+    grid-column: 1 / -1;   /* full row */
+}
