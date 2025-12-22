@@ -285,7 +285,18 @@
                 <input type="text" id="address" placeholder="Enter Full Address">
             </div>
 
-            <button type="submit" class="submit-btn">✅ Create Vendor</button>
+        <div class="form-field">
+  <label>Zip Code <span style="color:red">*</span></label>
+  <input
+    type="text"
+    name="client_zip_code"
+    placeholder="Enter 6 digit Zip Code"
+    required
+    maxlength="6"
+    pattern="[0-9]{6}">
+</div>
+
+            <button type="submit" class="submit-btn">✅ Create Client</button>
         </form>
     </div>
 </body>
