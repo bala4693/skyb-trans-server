@@ -377,6 +377,30 @@
         margin-top:10px;
     }
 
+.sales-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border: 1px solid #ccc;
+    max-height: 150px;
+    overflow-y: auto;
+    display: none;
+    z-index: 10;
+}
+
+.sales-dropdown div {
+    padding: 6px 10px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.sales-dropdown div:hover {
+    background: #f0f0f0;
+}
+
+
     </style>
 </head>
 <body>
@@ -620,6 +644,32 @@
     </select>
 </div>
 
+<!-- mPARIVAHAN PORTAL CARD -->
+<div class="vahan-portal-card" onclick="openMParivahan()">
+    <div class="vahan-icon">🚘</div>
+
+    <div class="vahan-content">
+        <h3>mParivahan – Vehicle Details</h3>
+        <p>Check official RTO vehicle details (Govt of India)</p>
+    </div>
+
+    <div class="vahan-action">➜</div>
+</div>
+
+                  <!-- FASTAG PORTAL CARD -->
+<div class="fastag-portal-card" onclick="openFastagPortal()">
+    <div class="fastag-icon">🛣️</div>
+
+    <div class="fastag-content">
+        <h3>FASTag – Balance & Status</h3>
+        <p>Check FASTag details on official portal</p>
+    </div>
+
+    <div class="fastag-action">➜</div>
+</div>
+
+
+
                 <div class="form-field">
                     <label>No. of Containers</label>
                     <input type="number" id="noOfContainers" placeholder="ex: 1">
@@ -680,14 +730,20 @@
 
     <h3 class="subsection-heading">Container Details</h3>
 
-    <div class="form-grid">
-
-        <div class="form-field sales-person-field">
-            <label>Sales Person <span style="color: red;">*</span></label>
-            <input 
-                type="text" 
-                placeholder="Type to search sales person">
-        </div>
+   <!-- ===== FCL PNR : SALES PERSON SEARCH ===== -->
+       
+            <div class="form-grid">
+                <div class="form-field sales-person-field">
+                    <label>Sales Person <span style="color: red;">*</span></label>
+                    <input 
+                        type="text" 
+                        id="fcl pnrSalesPerson" 
+                        placeholder="Type to search sales person" 
+                        autocomplete="off"
+                        oninput="searchSalesPerson('fcl pnr')"
+                        onfocus="searchSalesPerson('fcl pnr')">
+                    <div id="fcl pnrSuggestionsBox" class="suggestions-box"></div>
+                </div>
 
         
                 <div class="form-field"></div>
@@ -1406,20 +1462,50 @@ function addFclVehicleRow() {
 
     <td>
       <select>
-        <option>-- Select --</option>
-        <option>10 Ton</option>
-        <option>15 Ton</option>
-        <option>20 Ton</option>
+    <option>-- Select --</option>
+    <option>Tata Ace	1 Ton</option>
+    <option>Tata 207 DI	2 Ton</option>
+    <option>Eicher 407	3 Ton</option>
+    <option>Eicher 608	4 Ton</option>
+    <option>Eicher 709	5 Ton</option>
+    <option>Eicher 909	6 Ton</option>
+    <option>Tata 710	7 Ton</option>
+    <option>Ashok Leyland 1616	8 Ton</option>
+    <option>Tata 909	9 Ton</option>
+    <option>Tata 1109	10 Ton</option>
+    <option>Ashok Leyland 1618	12 Ton</option>  
+    <option>Tata 1412	14 Ton</option>
+    <option>Tata 1613	16 Ton</option>
+    <option>Ashok Leyland 2518	18 Ton</option>
+    <option>Tata 2016	20 Ton</option>
+    <option>Tata Signa 2518	25 Ton</option>
+    <option>Ashok Leyland 2820	30 Ton</option>
+    <option>Container Trailer	32 Ton</option>
+    <option>Multi Axle Trailer	40 Ton</option>
       </select>
     </td>
 
     <td>
       <select>
         <option>-- Select --</option>
-        <option>20 ft</option>
-        <option>24 ft</option>
-        <option>32 ft</option>
-        <option>40 ft</option>
+        <option>7 FEET</option>
+        <option>10 FEET</option>
+        <option>12 FEET</option>
+        <option>14 FEET</option>
+        <option>16 FEET</option>
+        <option>17 FEET</option>
+        <option>18 FEET</option>
+        <option>19 FEET</option>
+        <option>22 FEET</option>
+        <option>24 FEET</option>
+        <option>25 FEET</option>
+        <option>28 FEET</option>
+        <option>30 FEET</option>
+        <option>32 FEET</option>
+        <option>32 FEET</option>
+        <option>34 FEET</option>
+        <option>40 FEET</option>   
+        <OPTION>40 FEET</OPTION>
       </select>
     </td>
 
@@ -1456,200 +1542,199 @@ function updateVehicleCount() {
     document.querySelectorAll("#fclVehicleTableBody tr").length;
 }
         // ==================== LCL VEHICLE ENTRY ====================
-        let lclVehicleCounter = 0;
+       
+let lclVehicleIndex = 0;
 
-        function addLclVehicleRow() {
-            lclVehicleCounter++;
-            const tbody = document.getElementById('lclVehicleTableBody');
-            const row = document.createElement('tr');
-            row.id = `lcl-vehicle-row-${lclVehicleCounter}`;
-            
-            row.innerHTML = `
-                <td>${lclVehicleCounter}</td>
-                <td>
-                    <input type="text" 
-                           class="vehicle-input"
-                           id="lcl-vehicle-no-${lclVehicleCounter}" 
-                           placeholder="e.g., TN 01 AB 1234">
-                </td>
-                <td>
-                    <select class="vehicle-input" id="lcl-weight-capacity-${lclVehicleCounter}">
-                        <option value="">-- Select --</option>
-                        <option value="1ton">1 Ton</option>
-                        <option value="3ton">3 Ton</option>
-                        <option value="5ton">5 Ton</option>
-                        <option value="7ton">7 Ton</option>
-                        <option value="10ton">10 Ton</option>
-                        <option value="12ton">12 Ton</option>
-                        <option value="15ton">15 Ton</option>
-                        <option value="20ton">20 Ton</option>
-                    </select>
-                </td>
-                <td>
-                    <select class="vehicle-input" id="lcl-truck-length-${lclVehicleCounter}">
-                        <option value="">-- Select --</option>
-                        <option value="10feet">10 Feet</option>
-                        <option value="12feet">12 Feet</option>
-                        <option value="14feet">14 Feet</option>
-                        <option value="17feet">17 Feet</option>
-                        <option value="19feet">19 Feet</option>
-                        <option value="20feet">20 Feet</option>
-                        <option value="32feet">32 Feet</option>
-                        <option value="40feet">40 Feet</option>
-                    </select>
-                </td>
-                <td>
-                    <input type="text" 
-                           class="vehicle-input"
-                           id="lcl-pickup-point-${lclVehicleCounter}" 
-                           placeholder="Enter Pickup Point">
-                </td>
-                <td>
-                    <input type="text" 
-                           class="vehicle-input"
-                           id="lcl-delivery-point-${lclVehicleCounter}" 
-                           placeholder="Enter Delivery Point">
-                </td>
-                <td>
-                    <input type="number" 
-                           class="vehicle-input"
-                           id="lcl-total-amount-${lclVehicleCounter}" 
-                           placeholder="Enter Amount">
-                </td>
-                <td style="text-align: center;">
-                    <button type="button" 
-                            class="remove-btn"
-                            onclick="removeLclVehicleRow(${lclVehicleCounter})">
-                        Remove
-                    </button>
-                </td>
-            `;
-            
-            tbody.appendChild(row);
-            updateLclVehicleCount();
-        }
+function addLclVehicleRow() {
+  lclVehicleIndex++;
 
-        function removeLclVehicleRow(id) {
-            const row = document.getElementById(`lcl-vehicle-row-${id}`);
-            if (row) {
-                row.remove();
-                updateLclVehicleCount();
-                renumberLclVehicles();
-            }
-        }
+  const tbody = document.getElementById("lclVehicleTableBody");
 
-        function renumberLclVehicles() {
-            const rows = document.querySelectorAll('#lclVehicleTableBody tr');
-            rows.forEach((row, index) => {
-                const firstCell = row.querySelector('td:first-child');
-                if (firstCell) {
-                    firstCell.textContent = index + 1;
-                }
-            });
-        }
+  const row = document.createElement("tr");
+  row.innerHTML = `
+    <td>${lclVehicleIndex}</td>
 
-        function updateLclVehicleCount() {
-            const count = document.querySelectorAll('#lclVehicleTableBody tr').length;
-            document.getElementById('lclVehicleCount').textContent = count;
-        }
+    <td>
+      <input type="text" placeholder="e.g., TN 01 AB 1234">
+    </td>
+
+    <td>
+      <select>
+        <option>-- Select --</option>
+         <option>Tata Ace	1 Ton</option>
+    <option>Tata 207 DI	2 Ton</option>
+    <option>Eicher 407	3 Ton</option>
+    <option>Eicher 608	4 Ton</option>
+    <option>Eicher 709	5 Ton</option>
+    <option>Eicher 909	6 Ton</option>
+    <option>Tata 710	7 Ton</option>
+    <option>Ashok Leyland 1616	8 Ton</option>
+    <option>Tata 909	9 Ton</option>
+    <option>Tata 1109	10 Ton</option>
+    <option>Ashok Leyland 1618	12 Ton</option>  
+    <option>Tata 1412	14 Ton</option>
+    <option>Tata 1613	16 Ton</option>
+    <option>Ashok Leyland 2518	18 Ton</option>
+    <option>Tata 2016	20 Ton</option>
+    <option>Tata Signa 2518	25 Ton</option>
+    <option>Ashok Leyland 2820	30 Ton</option>
+    <option>Container Trailer	32 Ton</option>
+    <option>Multi Axle Trailer	40 Ton</option>
+      </select>
+    </td>
+
+    <td>
+      <select>
+        <option>-- Select --</option>
+       <option>7 FEET</option>
+        <option>10 FEET</option>
+        <option>12 FEET</option>
+        <option>14 FEET</option>
+        <option>16 FEET</option>
+        <option>17 FEET</option>
+        <option>18 FEET</option>
+        <option>19 FEET</option>
+        <option>22 FEET</option>
+        <option>24 FEET</option>
+        <option>25 FEET</option>
+        <option>28 FEET</option>
+        <option>30 FEET</option>
+        <option>32 FEET</option>
+        <option>32 FEET</option>
+        <option>34 FEET</option>
+        <option>40 FEET</option>   
+        <OPTION>40 FEET</OPTION>
+      </select>
+    </td>
+
+    <td>
+      <input type="text" placeholder="Enter Pickup Point">
+    </td>
+
+    <td>
+      <input type="text" placeholder="Enter Delivery Point">
+    </td>
+
+    <td>
+      <input type="number" class="vehicle-total" placeholder="Total Amount">
+    </td>
+
+    <td style="text-align:center;">
+      <button onclick="removeLclVehicleRow(this)">Remove</button>
+    </td>
+  `;
+
+  tbody.appendChild(row);
+  updateLclVehicleCount();
+}
+
+function removeLclVehicleRow(btn) {
+  btn.closest("tr").remove();
+  updateLclVehicleCount();
+}
+
+function updateLclVehicleCount() {
+  document.getElementById("lclVehicleCount").innerText =
+    document.querySelectorAll("#lclVehicleTableBody tr").length;
+}
 
         // ==================== AIR VEHICLE ENTRY ====================
-        let airVehicleCounter = 0;
+       
+let airVehicleIndex = 0;
 
-        function addAirVehicleRow() {
-            airVehicleCounter++;
-            const tbody = document.getElementById('airVehicleTableBody');
-            const row = document.createElement('tr');
-            row.id = `air-vehicle-row-${airVehicleCounter}`;
-            
-            row.innerHTML = `
-                <td>${airVehicleCounter}</td>
-                <td>
-                    <input type="text" 
-                           class="vehicle-input"
-                           id="air-vehicle-no-${airVehicleCounter}" 
-                           placeholder="e.g., TN 01 AB 1234">
-                </td>
-                <td>
-                    <select class="vehicle-input" id="air-weight-capacity-${airVehicleCounter}">
-                        <option value="">-- Select --</option>
-                        <option value="1ton">1 Ton</option>
-                        <option value="3ton">3 Ton</option>
-                        <option value="5ton">5 Ton</option>
-                        <option value="7ton">7 Ton</option>
-                        <option value="10ton">10 Ton</option>
-                        <option value="12ton">12 Ton</option>
-                        <option value="15ton">15 Ton</option>
-                        <option value="20ton">20 Ton</option>
-                    </select>
-                </td>
-                <td>
-                    <select class="vehicle-input" id="air-truck-length-${airVehicleCounter}">
-                        <option value="">-- Select --</option>
-                        <option value="10feet">10 Feet</option>
-                        <option value="12feet">12 Feet</option>
-                        <option value="14feet">14 Feet</option>
-                        <option value="17feet">17 Feet</option>
-                        <option value="19feet">19 Feet</option>
-                        <option value="20feet">20 Feet</option>
-                        <option value="32feet">32 Feet</option>
-                        <option value="40feet">40 Feet</option>
-                    </select>
-                </td>
-                <td>
-                    <input type="text" 
-                           class="vehicle-input"
-                           id="air-pickup-point-${airVehicleCounter}" 
-                           placeholder="Enter Pickup Point">
-                </td>
-                <td>
-                    <input type="text" 
-                           class="vehicle-input"
-                           id="air-delivery-point-${airVehicleCounter}" 
-                           placeholder="Enter Delivery Point">
-                </td>
-                <td>
-                    <input type="number" 
-                           class="vehicle-input"
-                           id="air-total-amount-${airVehicleCounter}" 
-                           placeholder="Enter Amount">
-                </td>
-                <td style="text-align: center;">
-                    <button type="button" 
-                            class="remove-btn"
-                            onclick="removeAirVehicleRow(${airVehicleCounter})">
-                        Remove
-                    </button>
-                </td>
-            `;
-            
-            tbody.appendChild(row);
-            updateAirVehicleCount();
-        }
+function addAirVehicleRow() {
+  airVehicleIndex++;
 
-        function removeAirVehicleRow(id) {
-            const row = document.getElementById(`air-vehicle-row-${id}`);
-            if (row) {
-                row.remove();
-                updateAirVehicleCount();
-                renumberAirVehicles();
-            }
-        }
+  const tbody = document.getElementById("airVehicleTableBody");
 
-        function renumberAirVehicles() {
-            const rows = document.querySelectorAll('#airVehicleTableBody tr');
-            rows.forEach((row, index) => {
-                const firstCell = row.querySelector('td:first-child');
-                if (firstCell) {
-                    firstCell.textContent = index + 1;
-                }
-            });
-        }
+  const row = document.createElement("tr");
+  row.innerHTML = `
+    <td>${airVehicleIndex}</td>
 
-        function updateAirVehicleCount() {
-            const count = document.querySelectorAll('#airVehicleTableBody tr').length;
-            document.getElementById('airVehicleCount').textContent = count;
-        }
+    <td>
+      <input type="text" placeholder="e.g., TN 01 AB 1234">
+    </td>
+
+    <td>
+      <select>
+        <option>-- Select --</option>
+        <option>Tata Ace	1 Ton</option>
+    <option>Tata 207 DI	2 Ton</option>
+    <option>Eicher 407	3 Ton</option>
+    <option>Eicher 608	4 Ton</option>
+    <option>Eicher 709	5 Ton</option>
+    <option>Eicher 909	6 Ton</option>
+    <option>Tata 710	7 Ton</option>
+    <option>Ashok Leyland 1616	8 Ton</option>
+    <option>Tata 909	9 Ton</option>
+    <option>Tata 1109	10 Ton</option>
+    <option>Ashok Leyland 1618	12 Ton</option>  
+    <option>Tata 1412	14 Ton</option>
+    <option>Tata 1613	16 Ton</option>
+    <option>Ashok Leyland 2518	18 Ton</option>
+    <option>Tata 2016	20 Ton</option>
+    <option>Tata Signa 2518	25 Ton</option>
+    <option>Ashok Leyland 2820	30 Ton</option>
+    <option>Container Trailer	32 Ton</option>
+    <option>Multi Axle Trailer	40 Ton</option>
+      </select>
+    </td>
+
+    <td>
+      <select>
+        <option>-- Select --</option>
+        <option>7 FEET</option>
+        <option>10 FEET</option>
+        <option>12 FEET</option>
+        <option>14 FEET</option>
+        <option>16 FEET</option>
+        <option>17 FEET</option>
+        <option>18 FEET</option>
+        <option>19 FEET</option>
+        <option>22 FEET</option>
+        <option>24 FEET</option>
+        <option>25 FEET</option>
+        <option>28 FEET</option>
+        <option>30 FEET</option>
+        <option>32 FEET</option>
+        <option>32 FEET</option>
+        <option>34 FEET</option>
+        <option>40 FEET</option>   
+        <OPTION>40 FEET</OPTION>
+      </select>
+    </td>
+
+    <td>
+      <input type="text" placeholder="Enter Pickup Point">
+    </td>
+
+    <td>
+      <input type="text" placeholder="Enter Delivery Point">
+    </td>
+
+    <td>
+      <input type="number" class="vehicle-total" placeholder="Total Amount">
+    </td>
+
+    <td style="text-align:center;">
+      <button onclick="removeAirVehicleRow(this)">Remove</button>
+    </td>
+  `;
+
+  tbody.appendChild(row);
+  updateAirVehicleCount();
+}
+
+function removeAirVehicleRow(btn) {
+  btn.closest("tr").remove();
+  updateAirVehicleCount();
+}
+
+function updateAirVehicleCount() {
+  document.getElementById("airVehicleCount").innerText =
+    document.querySelectorAll("#airVehicleTableBody tr").length;
+}
+
 
         // ==================== FORM SUBMISSION ====================
         function submitForm() {
@@ -1731,11 +1816,21 @@ function addRow(type) {
 
         <select style="padding:4px; font-size:13px;">
             <option value="">Select Container Type</option>
-            <option>20 ft – 10 Ton</option>
-            <option>24 ft – 12 Ton</option>
-            <option>28 ft – 14 Ton</option>
-            <option>32 ft – 15 Ton</option>
-            <option>40 ft – 20 Ton</option>
+            <option>20 feet</option>
+           <option value="20GP">20 GP</option>
+                        <option value="40GP">40 GP</option>
+                        <option value="40HC">40 HC</option>
+                        <option value="45HC">45 HC</option>
+                        <option value="20OT">20 OT</option>
+                        <option value="40OT">40 OT</option>
+                        <option value="40HC OT">40 HC OT</option>
+                        <option value="20RF">20 RF</option>
+                        <option value="40RF">40 RF</option>
+                        <option value="20FR">20 FR</option>
+                        <option value="40FR">40 FR</option>
+                        <option value="40HCFR">40 HCFR</option>
+                        <option value="20FB">20 FB</option>
+                        <option value="40FB">40 FB</option>
         </select>
 
         <button type="button" onclick="addRow('${type}')" 
@@ -1818,6 +1913,66 @@ function addContainer(type) {
 
   document.getElementById(type + "List").appendChild(row);
   select.value = "";
+}
+
+const fclPnrSalesPersons = [
+    "Ravi",
+    "Kumar",
+    "Suresh",
+    "Anand",
+    "Vijay",
+    "Manikandan",
+    "Prakash",
+    "Arun"
+];
+
+function filterFclPnrSalesPerson() {
+    const input = document.getElementById("fclPnrSalesPerson");
+    const dropdown = document.getElementById("fclPnrSalesDropdown");
+
+    const value = input.value.toLowerCase();
+    dropdown.innerHTML = "";
+
+    if (value === "") {
+        dropdown.style.display = "none";
+        return;
+    }
+
+    const matches = fclPnrSalesPersons.filter(name =>
+        name.toLowerCase().includes(value)
+    );
+
+    if (matches.length === 0) {
+        dropdown.style.display = "none";
+        return;
+    }
+
+    matches.forEach(name => {
+        const div = document.createElement("div");
+        div.textContent = name;
+        div.onclick = () => {
+            input.value = name;
+            dropdown.style.display = "none";
+        };
+        dropdown.appendChild(div);
+    });
+
+    dropdown.style.display = "block";
+}
+
+function openMParivahan() {
+    window.open(
+        "https://mparivahan.parivahan.gov.in/",
+        "_blank"
+    );
+}
+
+
+function openFastagPortal() {
+    window.open(
+        "https://fastag.ihmcl.com/",
+        "_blank"
+    );
 }
 
 </script>

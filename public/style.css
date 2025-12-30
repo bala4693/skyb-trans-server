@@ -381,3 +381,146 @@ body {
 .form-field.full-width {
     grid-column: 1 / -1;   /* full row */
 }
+
+/* VAHAN PORTAL CARD */
+.vahan-portal-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 16px 18px;
+    max-width: 520px;
+    background: linear-gradient(135deg, #e3f2fd, #ffffff);
+    border-left: 6px solid #1e88e5;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.vahan-portal-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 16px 18px;
+    max-width: 540px;
+    background: linear-gradient(135deg, #e8f5e9, #ffffff);
+    border-left: 6px solid #2e7d32;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+    transition: all 0.3s ease;
+}
+
+.vahan-portal-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+}
+
+.vahan-icon {
+    font-size: 34px;
+}
+
+.vahan-content h3 {
+    margin: 0;
+    font-size: 16px;
+    color: #1b5e20;
+}
+
+.vahan-content p {
+    margin: 4px 0 0;
+    font-size: 13px;
+    color: #555;
+}
+
+.vahan-action {
+    font-size: 22px;
+    font-weight: bold;
+    color: #2e7d32;
+}
+
+
+/* FASTAG PORTAL CARD */
+.fastag-portal-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 16px 18px;
+    max-width: 540px;
+    background: linear-gradient(135deg, #fff3e0, #ffffff);
+    border-left: 6px solid #ef6c00;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+    transition: all 0.3s ease;
+}
+
+.fastag-portal-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+}
+
+.fastag-icon {
+    font-size: 34px;
+}
+
+.fastag-content h3 {
+    margin: 0;
+    font-size: 16px;
+    color: #e65100;
+}
+
+.fastag-content p {
+    margin: 4px 0 0;
+    font-size: 13px;
+    color: #555;
+}
+
+.fastag-action {
+    font-size: 22px;
+    font-weight: bold;
+    color: #ef6c00;
+}
+
+
+.fcl-container-box {
+  margin-top: 20px;
+}
+
+.fcl-container-box h3 {
+  color: #1e40af;
+  margin-bottom: 12px;
+}
+
+.container-row {
+  display: flex;
+  gap: 20px;          /* same line spacing */
+}
+
+.container-card {
+  width: 200px;
+  padding: 15px;
+  border-radius: 10px;
+  background: #f9fafb;
+}
+
+.container-card.green {
+  border-left: 5px solid #22c55e;
+}
+
+.container-card.blue {
+  border-left: 5px solid #3b82f6;
+}
+
+.container-card .title {
+  font-size: 14px;
+  color: #374151;
+}
+
+.container-card .count {
+  font-size: 26px;
+  font-weight: bold;
+  margin-top: 5px;
+}
