@@ -1490,22 +1490,31 @@ function addFclVehicleRow() {
         <td><input class="vehicle-input" placeholder="Vehicle No"></td>
 
         <td>
-            <select class="vehicle-input">
-                <option>1 Ton</option>
-                <option>3 Ton</option>
-                <option>5 Ton</option>
-                <option>10 Ton</option>
-            </select>
-        </td>
+        <select class="vehicle-input">
+        <option value="1">1 Ton</option>
+      <option value="3">3 Ton</option>
+      <option value="5">5 Ton</option>
+      <option value="7">7 Ton</option>
+      <option value="9">9 Ton</option>
+      <option value="10">10 Ton</option>
+      <option value="22">22 Ton</option>
+      <option value="28">28 Ton</option>              
+    </select>
+</td>
 
-        <td>
-            <select class="vehicle-input">
-                <option>12 Ft</option>
-                <option>14 Ft</option>
-                <option>17 Ft</option>
-                <option>20 Ft</option>
-            </select>
-        </td>
+    <td>
+    <select class="vehicle-input">
+    <option value="7">7 ft</option>
+      <option value="12">12 ft</option>
+      <option value="16">16 ft</option>
+      <option value="18">18 ft</option>
+      <option value="20">20 ft</option>
+      <option value="24">24 ft</option>
+      <option value="32">32 ft</option>
+      <option value="40">40 ft</option>           
+    </select>
+ </td>
+
 <td>
     <div class="point-row">
         <div id="fcl-pickup-1" class="point-wrapper">
@@ -1515,7 +1524,7 @@ function addFclVehicleRow() {
     </div>
 </td>
 
-       <td>
+    <td>
     <div class="point-row">
         <div id="fcl-delivery-1" class="point-wrapper">
             <input class="vehicle-input" placeholder="Delivery Point">
@@ -1523,7 +1532,6 @@ function addFclVehicleRow() {
         <button class="plus-btn" onclick="addDelivery('fcl',1)">+</button>
     </div>
 </td>
-
 
         <td><input class="vehicle-input" placeholder="Amount"></td>
     `;
@@ -1542,12 +1550,33 @@ function addLclVehicleRow() {
 
     row.innerHTML = `
         <td>${lclVehicleCounter}</td>
+         <td><input class="vehicle-input" placeholder="Vehicle No"></td>
 
-        <td><input class="vehicle-input" placeholder="Vehicle No"></td>
+<td>
+    <select class="vehicle-input">
+    <option value="1">1 Ton</option>
+      <option value="3">3 Ton</option>
+      <option value="5">5 Ton</option>
+      <option value="7">7 Ton</option>
+      <option value="9">9 Ton</option>
+      <option value="10">10 Ton</option>
+      <option value="22">22 Ton</option>
+      <option value="28">28 Ton</option>         
+    </select>
+</td>
 
-        <td><input class="vehicle-input" placeholder="Weight (KG)"></td>
-
-        <td><input class="vehicle-input" placeholder="Length (FT)"></td>
+    <td>
+    <select class="vehicle-input">
+    <option value="7">7 ft</option>
+      <option value="12">12 ft</option>
+      <option value="16">16 ft</option>
+      <option value="18">18 ft</option>
+      <option value="20">20 ft</option>
+      <option value="24">24 ft</option>
+      <option value="32">32 ft</option>
+      <option value="40">40 ft</option>       
+     </select>
+</td> 
 
       <td>
     <div class="point-row">
@@ -1585,13 +1614,35 @@ function addAirVehicleRow() {
 
     row.innerHTML = `
         <td>${air}</td> 
-        <td><input class="vehicle-input" placeholder="Vehicle No"></td>
+         <td><input class="vehicle-input" placeholder="Vehicle No"></td>
 
-        <td><input class="vehicle-input" placeholder="Weight (KG)"></td>
+    <td>
+     <select class="vehicle-input">
+     <option value="1">1 Ton</option>
+      <option value="3">3 Ton</option>
+      <option value="5">5 Ton</option>
+      <option value="7">7 Ton</option>
+      <option value="9">9 Ton</option>
+      <option value="10">10 Ton</option>
+      <option value="22">22 Ton</option>
+      <option value="28">28 Ton</option>
+   </select>
+</td>
 
-        <td><input class="vehicle-input" placeholder="Length (FT)"></td>
+    <td>
+     <select class="vehicle-input">
+     <option value="7">7 ft</option>
+      <option value="12">12 ft</option>
+      <option value="16">16 ft</option>
+      <option value="18">18 ft</option>
+      <option value="20">20 ft</option>
+      <option value="24">24 ft</option>
+      <option value="32">32 ft</option>
+      <option value="40">40 ft</option>
+    </select>
+</td>
 
-      <td>
+    <td>
     <div class="point-row">
         <div id="air-pickup-1" class="point-wrapper">
             <input class="vehicle-input" placeholder="Pickup Point">
