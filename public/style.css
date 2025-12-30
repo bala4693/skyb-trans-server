@@ -483,6 +483,63 @@ body {
     font-weight: bold;
     color: #ef6c00;
 }
+                    
+
+/* TOP LEFT MENU */
+.top-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 220px;
+  height: 100vh;
+  background: #ffffff;
+  border-right: 1px solid #ddd;
+  padding: 15px;
+  overflow-y: auto;
+  z-index: 999;
+}
+
+/* MENU TITLE */
+.menu-title {
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+/* MENU LINKS */
+.menu-items a {
+  display: block;
+  padding: 8px 10px;
+  margin-bottom: 6px;
+  text-decoration: none;
+  color: #000;
+  border-radius: 5px;
+}
+
+.menu-items a:hover {
+  background: #e8f0ff;
+}
+
+/* PUSH EXISTING PAGE RIGHT */
+body {
+  margin-left: 220px;
+}
+
+.ftl-box {
+  margin-top: 20px;
+}
+
+.ftl-row {
+  display: flex;
+  gap: 15px;
+}
+
+.ftl-row select,
+.ftl-row input {
+  padding: 10px;
+  width: 180px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
 
 
 .fcl-container-box {
@@ -523,4 +580,33 @@ body {
   font-size: 26px;
   font-weight: bold;
   margin-top: 5px;
+}
+
+
+
+.points-container {
+  display: flex;
+  gap: 40px;
+}
+
+.point-box {
+  flex: 1;
+}
+
+.point-box label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.point-box input {
+  width: 90%;
+  padding: 8px;
+  margin-bottom: 8px;
+}
+
+.add-btn {
+  padding: 4px 10px;
+  font-size: 18px;
+  cursor: pointer;
 }

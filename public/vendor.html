@@ -401,7 +401,40 @@
 }
 
 
-    </style>
+.point-wrapper input{
+    display:block;
+    margin-bottom:5px;
+}
+
+.plus-btn{
+    margin-top:5px;
+    padding:2px 8px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+
+.point-row{
+    display:flex;
+    align-items:flex-start;
+    gap:6px;
+}
+
+.point-wrapper input{
+    display:block;
+    margin-bottom:6px;
+    width:140px;
+}
+
+.plus-btn{
+    height:32px;
+    width:32px;
+    cursor:pointer;
+    font-size:18px;
+    border:1px solid #ccc;
+    background:#f5f5f5;
+}
+</style>
 </head>
 <body>
 
@@ -1444,297 +1477,159 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // ==================== FCL VEHICLE ENTRY ====================
-     
-let fclVehicleIndex = 0;
+let fclVehicleCounter = 0;
 
 function addFclVehicleRow() {
-  fclVehicleIndex++;
+    fclVehicleCounter++;
+    const tbody = document.getElementById('fclVehicleTableBody');
+    const row = document.createElement('tr');
 
-  const tbody = document.getElementById("fclVehicleTableBody");
+    row.innerHTML = `
+        <td>${fclVehicleCounter}</td>
 
-  const row = document.createElement("tr");
-  row.innerHTML = `
-    <td>${fclVehicleIndex}</td>
+        <td><input class="vehicle-input" placeholder="Vehicle No"></td>
 
-    <td>
-      <input type="text" placeholder="e.g., TN 01 AB 1234">
-    </td>
+        <td>
+            <select class="vehicle-input">
+                <option>1 Ton</option>
+                <option>3 Ton</option>
+                <option>5 Ton</option>
+                <option>10 Ton</option>
+            </select>
+        </td>
 
-    <td>
-      <select>
-    <option>-- Select --</option>
-    <option>Tata Ace	1 Ton</option>
-    <option>Tata 207 DI	2 Ton</option>
-    <option>Eicher 407	3 Ton</option>
-    <option>Eicher 608	4 Ton</option>
-    <option>Eicher 709	5 Ton</option>
-    <option>Eicher 909	6 Ton</option>
-    <option>Tata 710	7 Ton</option>
-    <option>Ashok Leyland 1616	8 Ton</option>
-    <option>Tata 909	9 Ton</option>
-    <option>Tata 1109	10 Ton</option>
-    <option>Ashok Leyland 1618	12 Ton</option>  
-    <option>Tata 1412	14 Ton</option>
-    <option>Tata 1613	16 Ton</option>
-    <option>Ashok Leyland 2518	18 Ton</option>
-    <option>Tata 2016	20 Ton</option>
-    <option>Tata Signa 2518	25 Ton</option>
-    <option>Ashok Leyland 2820	30 Ton</option>
-    <option>Container Trailer	32 Ton</option>
-    <option>Multi Axle Trailer	40 Ton</option>
-      </select>
-    </td>
+        <td>
+            <select class="vehicle-input">
+                <option>12 Ft</option>
+                <option>14 Ft</option>
+                <option>17 Ft</option>
+                <option>20 Ft</option>
+            </select>
+        </td>
+<td>
+    <div class="point-row">
+        <div id="fcl-pickup-1" class="point-wrapper">
+            <input class="vehicle-input" placeholder="Pickup Point">
+        </div>
+        <button class="plus-btn" onclick="addPickup('fcl',1)">+</button>
+    </div>
+</td>
 
-    <td>
-      <select>
-        <option>-- Select --</option>
-        <option>7 FEET</option>
-        <option>10 FEET</option>
-        <option>12 FEET</option>
-        <option>14 FEET</option>
-        <option>16 FEET</option>
-        <option>17 FEET</option>
-        <option>18 FEET</option>
-        <option>19 FEET</option>
-        <option>22 FEET</option>
-        <option>24 FEET</option>
-        <option>25 FEET</option>
-        <option>28 FEET</option>
-        <option>30 FEET</option>
-        <option>32 FEET</option>
-        <option>32 FEET</option>
-        <option>34 FEET</option>
-        <option>40 FEET</option>   
-        <OPTION>40 FEET</OPTION>
-      </select>
-    </td>
+       <td>
+    <div class="point-row">
+        <div id="fcl-delivery-1" class="point-wrapper">
+            <input class="vehicle-input" placeholder="Delivery Point">
+        </div>
+        <button class="plus-btn" onclick="addDelivery('fcl',1)">+</button>
+    </div>
+</td>
 
-    <td>
-      <input type="text" placeholder="Enter Pickup Point">
-    </td>
 
-    <td>
-      <input type="text" placeholder="Enter Delivery Point">
-    </td>
+        <td><input class="vehicle-input" placeholder="Amount"></td>
+    `;
 
-    <td>
-      <!-- 🔥 THIS IS IMPORTANT -->
-      <input type="number" class="vehicle-total" placeholder="Total Amount">
-    </td>
-
-    <td style="text-align:center;">
-      <button onclick="removeVehicleRow(this)">Remove</button>
-    </td>
-  `;
-
-  tbody.appendChild(row);
-  updateVehicleCount();
-  updateVehicleTotal(); // 👈 auto calculate when row added
+    tbody.appendChild(row);
 }
 
-function removeVehicleRow(btn) {
-  btn.closest("tr").remove();
-  updateVehicleCount();
-}
-
-function updateVehicleCount() {
-  document.getElementById("fclVehicleCount").innerText =
-    document.querySelectorAll("#fclVehicleTableBody tr").length;
-}
         // ==================== LCL VEHICLE ENTRY ====================
-       
-let lclVehicleIndex = 0;
+
+let lclVehicleCounter = 0;
 
 function addLclVehicleRow() {
-  lclVehicleIndex++;
+    lclVehicleCounter++;
+    const tbody = document.getElementById('lclVehicleTableBody');
+    const row = document.createElement('tr');
 
-  const tbody = document.getElementById("lclVehicleTableBody");
+    row.innerHTML = `
+        <td>${lclVehicleCounter}</td>
 
-  const row = document.createElement("tr");
-  row.innerHTML = `
-    <td>${lclVehicleIndex}</td>
+        <td><input class="vehicle-input" placeholder="Vehicle No"></td>
 
-    <td>
-      <input type="text" placeholder="e.g., TN 01 AB 1234">
-    </td>
+        <td><input class="vehicle-input" placeholder="Weight (KG)"></td>
 
-    <td>
-      <select>
-        <option>-- Select --</option>
-         <option>Tata Ace	1 Ton</option>
-    <option>Tata 207 DI	2 Ton</option>
-    <option>Eicher 407	3 Ton</option>
-    <option>Eicher 608	4 Ton</option>
-    <option>Eicher 709	5 Ton</option>
-    <option>Eicher 909	6 Ton</option>
-    <option>Tata 710	7 Ton</option>
-    <option>Ashok Leyland 1616	8 Ton</option>
-    <option>Tata 909	9 Ton</option>
-    <option>Tata 1109	10 Ton</option>
-    <option>Ashok Leyland 1618	12 Ton</option>  
-    <option>Tata 1412	14 Ton</option>
-    <option>Tata 1613	16 Ton</option>
-    <option>Ashok Leyland 2518	18 Ton</option>
-    <option>Tata 2016	20 Ton</option>
-    <option>Tata Signa 2518	25 Ton</option>
-    <option>Ashok Leyland 2820	30 Ton</option>
-    <option>Container Trailer	32 Ton</option>
-    <option>Multi Axle Trailer	40 Ton</option>
-      </select>
-    </td>
+        <td><input class="vehicle-input" placeholder="Length (FT)"></td>
 
-    <td>
-      <select>
-        <option>-- Select --</option>
-       <option>7 FEET</option>
-        <option>10 FEET</option>
-        <option>12 FEET</option>
-        <option>14 FEET</option>
-        <option>16 FEET</option>
-        <option>17 FEET</option>
-        <option>18 FEET</option>
-        <option>19 FEET</option>
-        <option>22 FEET</option>
-        <option>24 FEET</option>
-        <option>25 FEET</option>
-        <option>28 FEET</option>
-        <option>30 FEET</option>
-        <option>32 FEET</option>
-        <option>32 FEET</option>
-        <option>34 FEET</option>
-        <option>40 FEET</option>   
-        <OPTION>40 FEET</OPTION>
-      </select>
-    </td>
+      <td>
+    <div class="point-row">
+        <div id="lcl-pickup-1" class="point-wrapper">
+            <input class="vehicle-input" placeholder="Pickup Point">
+        </div>
+        <button class="plus-btn" onclick="addPickup('lcl',1)">+</button>
+    </div>
+</td>
 
-    <td>
-      <input type="text" placeholder="Enter Pickup Point">
-    </td>
+<td>
+    <div class="point-row">
+        <div id="lcl-delivery-1" class="point-wrapper">
+            <input class="vehicle-input" placeholder="Delivery Point">
+        </div>
+        <button class="plus-btn" onclick="addDelivery('lcl',1)">+</button>
+    </div>
+</td>
 
-    <td>
-      <input type="text" placeholder="Enter Delivery Point">
-    </td>
 
-    <td>
-      <input type="number" class="vehicle-total" placeholder="Total Amount">
-    </td>
+        <td><input class="vehicle-input" placeholder="Amount"></td>
+    `;
 
-    <td style="text-align:center;">
-      <button onclick="removeLclVehicleRow(this)">Remove</button>
-    </td>
-  `;
-
-  tbody.appendChild(row);
-  updateLclVehicleCount();
-}
-
-function removeLclVehicleRow(btn) {
-  btn.closest("tr").remove();
-  updateLclVehicleCount();
-}
-
-function updateLclVehicleCount() {
-  document.getElementById("lclVehicleCount").innerText =
-    document.querySelectorAll("#lclVehicleTableBody tr").length;
+    tbody.appendChild(row);
 }
 
         // ==================== AIR VEHICLE ENTRY ====================
-       
-let airVehicleIndex = 0;
+  
+let air = 0;
 
 function addAirVehicleRow() {
-  airVehicleIndex++;
+    air++;
+    const tbody = document.getElementById('airVehicleTableBody');
+    const row = document.createElement('tr');
 
-  const tbody = document.getElementById("airVehicleTableBody");
+    row.innerHTML = `
+        <td>${air}</td> 
+        <td><input class="vehicle-input" placeholder="Vehicle No"></td>
 
-  const row = document.createElement("tr");
-  row.innerHTML = `
-    <td>${airVehicleIndex}</td>
+        <td><input class="vehicle-input" placeholder="Weight (KG)"></td>
 
-    <td>
-      <input type="text" placeholder="e.g., TN 01 AB 1234">
-    </td>
+        <td><input class="vehicle-input" placeholder="Length (FT)"></td>
 
-    <td>
-      <select>
-        <option>-- Select --</option>
-        <option>Tata Ace	1 Ton</option>
-    <option>Tata 207 DI	2 Ton</option>
-    <option>Eicher 407	3 Ton</option>
-    <option>Eicher 608	4 Ton</option>
-    <option>Eicher 709	5 Ton</option>
-    <option>Eicher 909	6 Ton</option>
-    <option>Tata 710	7 Ton</option>
-    <option>Ashok Leyland 1616	8 Ton</option>
-    <option>Tata 909	9 Ton</option>
-    <option>Tata 1109	10 Ton</option>
-    <option>Ashok Leyland 1618	12 Ton</option>  
-    <option>Tata 1412	14 Ton</option>
-    <option>Tata 1613	16 Ton</option>
-    <option>Ashok Leyland 2518	18 Ton</option>
-    <option>Tata 2016	20 Ton</option>
-    <option>Tata Signa 2518	25 Ton</option>
-    <option>Ashok Leyland 2820	30 Ton</option>
-    <option>Container Trailer	32 Ton</option>
-    <option>Multi Axle Trailer	40 Ton</option>
-      </select>
-    </td>
+      <td>
+    <div class="point-row">
+        <div id="air-pickup-1" class="point-wrapper">
+            <input class="vehicle-input" placeholder="Pickup Point">
+        </div>
+        <button class="plus-btn" onclick="addPickup('air',1)">+</button>
+    </div>
+</td>
 
-    <td>
-      <select>
-        <option>-- Select --</option>
-        <option>7 FEET</option>
-        <option>10 FEET</option>
-        <option>12 FEET</option>
-        <option>14 FEET</option>
-        <option>16 FEET</option>
-        <option>17 FEET</option>
-        <option>18 FEET</option>
-        <option>19 FEET</option>
-        <option>22 FEET</option>
-        <option>24 FEET</option>
-        <option>25 FEET</option>
-        <option>28 FEET</option>
-        <option>30 FEET</option>
-        <option>32 FEET</option>
-        <option>32 FEET</option>
-        <option>34 FEET</option>
-        <option>40 FEET</option>   
-        <OPTION>40 FEET</OPTION>
-      </select>
-    </td>
+<td>
+    <div class="point-row">
+        <div id="air-delivery-1" class="point-wrapper">
+            <input class="vehicle-input" placeholder="Delivery Point">
+        </div>
+        <button class="plus-btn" onclick="addDelivery('air',1)">+</button>
+    </div>
+</td>
 
-    <td>
-      <input type="text" placeholder="Enter Pickup Point">
-    </td>
 
-    <td>
-      <input type="text" placeholder="Enter Delivery Point">
-    </td>
+        <td><input class="vehicle-input" placeholder="Amount"></td>
+    `;
 
-    <td>
-      <input type="number" class="vehicle-total" placeholder="Total Amount">
-    </td>
-
-    <td style="text-align:center;">
-      <button onclick="removeAirVehicleRow(this)">Remove</button>
-    </td>
-  `;
-
-  tbody.appendChild(row);
-  updateAirVehicleCount();
+    tbody.appendChild(row);
+}
+function addPickup(type, id) {
+    const div = document.getElementById(`${type}-pickup-${id}`);
+    const input = document.createElement("input");
+    input.className = "vehicle-input";
+    input.placeholder = "Pickup Point";
+    div.appendChild(input);
 }
 
-function removeAirVehicleRow(btn) {
-  btn.closest("tr").remove();
-  updateAirVehicleCount();
+function addDelivery(type, id) {
+    const div = document.getElementById(`${type}-delivery-${id}`);
+    const input = document.createElement("input");
+    input.className = "vehicle-input";
+    input.placeholder = "Delivery Point";
+    div.appendChild(input);
 }
-
-function updateAirVehicleCount() {
-  document.getElementById("airVehicleCount").innerText =
-    document.querySelectorAll("#airVehicleTableBody tr").length;
-}
-
 
         // ==================== FORM SUBMISSION ====================
         function submitForm() {
@@ -1974,6 +1869,8 @@ function openFastagPortal() {
         "_blank"
     );
 }
+
+
 
 </script>
 </body>

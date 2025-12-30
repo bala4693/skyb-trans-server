@@ -18,21 +18,25 @@
 }
 </style>
 <body>
+ 
+<!-- TOP LEFT MENU -->
+<div class="top-menu">
+  <div class="menu-title">MENU</div>
+
+  <div class="menu-items">
+    
+        <button class="btn client" onclick="window.location.href='client.html'">Client</button>
+        <button class="btn client" onclick="window.location.href='client creation.html'">Client Creation</button>
+        <button class="btn vendor" onclick="window.location.href='vendor.html'">Vendor</button>
+        <button class="btn vendor" onclick="window.location.href='vendor creation.html'">Vendor Creation</button>
+</div>
+</div>
+
 
 <div class="top-bar">
   <a href="login.html">Back to Login page</a>
 </div>
 
-  <!-- Dashboard Card -->
-  <div class="dashboard-wrapper">
-    <div class="dashboard-card">
-      <h2>Dashboard</h2>
-        <button class="btn client" onclick="window.location.href='client.html'">Client</button>
-        <button class="btn client" onclick="window.location.href='client creation.html'">Client Creation</button>
-        <button class="btn vendor" onclick="window.location.href='vendor.html'">Vendor</button>
-        <button class="btn vendor" onclick="window.location.href='vendor creation.html'">Vendor Creation</button>
-    </div>
-  </div>
 
   <!-- Booking Headers -->
   <div class="booking-header">
@@ -47,7 +51,7 @@
 
     <!-- LEFT : FCL -->
     <div class="fcl-side" id="fclSection">
-      <h3 class="section-title">FCL – Available Containers</h3>
+    <h3 class="section-title">FCL – Available Containers</h3>
 
   <div class="container-row">
     <div class="container-card green">
@@ -62,42 +66,72 @@
   </div>
 </div>
 
-
     <!-- RIGHT : LCL -->
     <div class="lcl-side">
+<div class="ftl-box">
+  <h3 class="section-title">FTL – Truck Availability</h3>
 
-      <div class="form-field">
-        <label>Truck Availability</label>
-        <select>
-          <option value="">-- Select Truck Type --</option>
-          <option>Tata Ace	1 Ton	7 FEET</option>
-          <option>Tata 207 DI	2 Ton	10 FEET</option>
-          <option>Eicher 407	3 Ton	12 FEET</option>
-          <option>Eicher 608	4 Ton	14 FEET</option>
-          <option>Eicher 709	5 Ton	16 FEET</option>
-          <option>Eicher 909	6 Ton	17 FEET</option>
-          <option>Tata 710	7 Ton	18 FEET</option>
-          <option>Ashok Leyland 1616	8 Ton	18 FEET</option>
-          <option>Ashok Leyland 1918	9 Ton	20 FEET</option>
-          <option>Tata 909	9 Ton	19 FEET</option>
-          <option>Tata 1109	10 Ton	22 FEET</option>
-          <option>Ashok Leyland 1618	12 Ton	24 FEET</option>
-          <option>Tata 1412	14 Ton	25 FEET</option>
-          <option>Tata 1613	16 Ton	28 FEET</option>
-          <option>Ashok Leyland 2518	18 Ton	30 FEET</option>
-          <option>Tata 2016	20 Ton	32 FEET</option>
-          <option>Tata Signa 2518	25 Ton	32 FEET</option>
-          <option>Ashok Leyland 2820	30 Ton	34 FEET</option>
-          <option>Container Trailer	32 Ton	40 FEET</option>
-          <option>Multi Axle Trailer	40 Ton	40 FEET</option>
-        </select>
-      </div>
-    </div>
+  <div class="ftl-row">
+    <select id="weight" onchange="findVehicle()">
+      <option value="">Select Weight</option>
+      <option value="1">1 Ton</option>
+      <option value="3">3 Ton</option>
+      <option value="5">5 Ton</option>
+      <option value="7">7 Ton</option>
+      <option value="9">9 Ton</option>
+      <option value="10">10 Ton</option>
+      <option value="22">22 Ton</option>
+      <option value="28">28 Ton</option>
+    </select>
 
+
+    <select id="length" onchange="findVehicle()">
+      <option value="">Select Length</option>
+      <option value="7">7 ft</option>
+      <option value="12">12 ft</option>
+      <option value="16">16 ft</option>
+      <option value="18">18 ft</option>
+      <option value="20">20 ft</option>
+      <option value="24">24 ft</option>
+      <option value="32">32 ft</option>
+      <option value="40">40 ft</option>
+    </select>
+
+
+    <input type="text" id="vehicle" placeholder="Vehicle Name" readonly />
   </div>
-
 </div>
-
+    </div>
+  </div>
 </div>
+    </div>
+    </div>
+  </div>
+</div>
+<script>
+const truckData = [
+  { weight: 1, length: 7, vehicle: "Tata Ace" },
+  { weight: 3, length: 12, vehicle: "Dost" },
+  { weight: 5, length: 16, vehicle: "Eicher" },
+  { weight: 7, length: 18, vehicle: "Eicher" },
+  { weight: 9, length: 20, vehicle: "Tata" },
+  { weight: 10, length: 24, vehicle: "Tata" },
+  { weight: 22, length: 32, vehicle: "Trailer" },
+  { weight: 28, length: 40, vehicle: "Trailer / Trailer MA" }
+];
+
+function findVehicle() {
+  const weight = document.getElementById("weight").value;
+  const length = document.getElementById("length").value;
+  const vehicleInput = document.getElementById("vehicle");
+
+  const match = truckData.find(
+    t => t.weight == weight && t.length == length
+  );
+
+  vehicleInput.value = match ? match.vehicle : "Not Available";
+}
+</script>
+
 </body>
 </html>
