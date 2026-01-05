@@ -434,11 +434,32 @@
     border:1px solid #ccc;
     background:#f5f5f5;
 }
+
+.dashboard-back-btn{
+    position: absolute;
+    bottom: 20px;
+    right: 30px;
+}
+
+.dashboard-back-btn button{
+    background-color: #ff9800;   /* ORANGE */
+    color: #fff;
+    border: none;
+    padding: 12px 26px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.dashboard-back-btn button:hover{
+    background-color: #e68900;
+}
 </style>
 </head>
 <body>
 
-    <a href="dashboard.html" class="btn green">Back to Dashboard</a>
 
     <div class="container">
         <h1 style="color: #2c5aa0; margin-bottom: 30px;">Vendor / Rate Entry Form</h1>
@@ -676,31 +697,6 @@
         <option value="CAD">CAD – $ Canadian Dollar</option>
     </select>
 </div>
-
-<!-- mPARIVAHAN PORTAL CARD -->
-<div class="vahan-portal-card" onclick="openMParivahan()">
-    <div class="vahan-icon">🚘</div>
-
-    <div class="vahan-content">
-        <h3>mParivahan – Vehicle Details</h3>
-        <p>Check official RTO vehicle details (Govt of India)</p>
-    </div>
-
-    <div class="vahan-action">➜</div>
-</div>
-
-                  <!-- FASTAG PORTAL CARD -->
-<div class="fastag-portal-card" onclick="openFastagPortal()">
-    <div class="fastag-icon">🛣️</div>
-
-    <div class="fastag-content">
-        <h3>FASTag – Balance & Status</h3>
-        <p>Check FASTag details on official portal</p>
-    </div>
-
-    <div class="fastag-action">➜</div>
-</div>
-
 
 
                 <div class="form-field">
@@ -1208,6 +1204,11 @@
         <button type="button" class="submit-btn" onclick="submitForm()">Submit Vendor Data</button>
     </div>
 
+    <div class="dashboard-back-btn">
+    <button onclick="goBackDashboard()">⬅ Back</button>
+</div>
+
+
     <script>
         // ==================== SALES PERSON DATA ====================
         const salesPersons = [
@@ -1514,29 +1515,73 @@ function addFclVehicleRow() {
       <option value="40">40 ft</option>           
     </select>
  </td>
+ 
+        <td>
+            <div class="pickup-container">
+                <div class="point-row">
+                    <input type="text" class="vehicle-input" placeholder="Pickup Point">
+                    <button type="button" class="icon-btn" onclick="addPickup(this)">+</button>
+                    <button type="button" class="icon-btn" onclick="removePoint(this)">−</button>
+                </div>
+            </div>
+        </td>
 
-<td>
-    <div class="point-row">
-        <div id="fcl-pickup-1" class="point-wrapper">
-            <input class="vehicle-input" placeholder="Pickup Point">
-        </div>
-        <button class="plus-btn" onclick="addPickup('fcl',1)">+</button>
-    </div>
-</td>
-
-    <td>
-    <div class="point-row">
-        <div id="fcl-delivery-1" class="point-wrapper">
-            <input class="vehicle-input" placeholder="Delivery Point">
-        </div>
-        <button class="plus-btn" onclick="addDelivery('fcl',1)">+</button>
-    </div>
-</td>
+        <td>
+            <div class="delivery-container">
+                <div class="point-row">
+                    <input type="text" class="vehicle-input" placeholder="Delivery Point">
+                    <button type="button" class="icon-btn" onclick="addDelivery(this)">+</button>
+                    <button type="button" class="icon-btn" onclick="removePoint(this)">−</button>
+                </div>
+            </div>
+        </td>
 
         <td><input class="vehicle-input" placeholder="Amount"></td>
+
+        <td style="text-align:center;">
+            <button class="remove-btn" onclick="removeVehicleRow(this)">Remove</button>
+        </td>
     `;
 
     tbody.appendChild(row);
+}
+function addPickup(btn) {
+    const container = btn.closest('.pickup-container');
+
+    const div = document.createElement('div');
+    div.className = 'point-row';
+    div.innerHTML = `
+        <input type="text" class="vehicle-input" placeholder="Pickup Point">
+        <button type="button" class="icon-btn" onclick="addPickup(this)">+</button>
+        <button type="button" class="icon-btn" onclick="removePoint(this)">−</button>
+    `;
+    container.appendChild(div);
+}
+
+function addDelivery(btn) {
+    const container = btn.closest('.delivery-container');
+
+    const div = document.createElement('div');
+    div.className = 'point-row';
+    div.innerHTML = `
+        <input type="text" class="vehicle-input" placeholder="Delivery Point">
+        <button type="button" class="icon-btn" onclick="addDelivery(this)">+</button>
+        <button type="button" class="icon-btn" onclick="removePoint(this)">−</button>
+    `;
+    container.appendChild(div);
+}
+
+function removePoint(btn) {
+    const row = btn.closest('.point-row');
+    const container = row.parentElement;
+
+    if (container.children.length > 1) {
+        row.remove();
+    }
+}
+
+function removeVehicleRow(btn) {
+    btn.closest('tr').remove();
 }
 
         // ==================== LCL VEHICLE ENTRY ====================
@@ -1577,32 +1622,35 @@ function addLclVehicleRow() {
       <option value="40">40 ft</option>       
      </select>
 </td> 
-
-      <td>
-    <div class="point-row">
-        <div id="lcl-pickup-1" class="point-wrapper">
-            <input class="vehicle-input" placeholder="Pickup Point">
-        </div>
-        <button class="plus-btn" onclick="addPickup('lcl',1)">+</button>
-    </div>
-</td>
-
 <td>
-    <div class="point-row">
-        <div id="lcl-delivery-1" class="point-wrapper">
-            <input class="vehicle-input" placeholder="Delivery Point">
-        </div>
-        <button class="plus-btn" onclick="addDelivery('lcl',1)">+</button>
-    </div>
-</td>
+            <div class="pickup-container">
+                <div class="point-row">
+                    <input type="text" class="vehicle-input" placeholder="Pickup Point">
+                    <button type="button" class="icon-btn" onclick="addPickup(this)">+</button>
+                    <button type="button" class="icon-btn" onclick="removePoint(this)">−</button>
+                </div>
+            </div>
+        </td>
 
+        <td>
+            <div class="delivery-container">
+                <div class="point-row">
+                    <input type="text" class="vehicle-input" placeholder="Delivery Point">
+                    <button type="button" class="icon-btn" onclick="addDelivery(this)">+</button>
+                    <button type="button" class="icon-btn" onclick="removePoint(this)">−</button>
+                </div>
+            </div>
+        </td>
 
         <td><input class="vehicle-input" placeholder="Amount"></td>
+
+        <td style="text-align:center;">
+            <button class="remove-btn" onclick="removeVehicleRow(this)">Remove</button>
+        </td>
     `;
 
     tbody.appendChild(row);
 }
-
         // ==================== AIR VEHICLE ENTRY ====================
   
 let air = 0;
@@ -1641,47 +1689,35 @@ function addAirVehicleRow() {
       <option value="40">40 ft</option>
     </select>
 </td>
+ <td>
+            <div class="pickup-container">
+                <div class="point-row">
+                    <input type="text" class="vehicle-input" placeholder="Pickup Airport">
+                    <button type="button" class="icon-btn" onclick="addPickup(this)">+</button>
+                    <button type="button" class="icon-btn" onclick="removePoint(this)">−</button>
+                </div>
+            </div>
+        </td>
 
-    <td>
-    <div class="point-row">
-        <div id="air-pickup-1" class="point-wrapper">
-            <input class="vehicle-input" placeholder="Pickup Point">
-        </div>
-        <button class="plus-btn" onclick="addPickup('air',1)">+</button>
-    </div>
-</td>
-
-<td>
-    <div class="point-row">
-        <div id="air-delivery-1" class="point-wrapper">
-            <input class="vehicle-input" placeholder="Delivery Point">
-        </div>
-        <button class="plus-btn" onclick="addDelivery('air',1)">+</button>
-    </div>
-</td>
-
+        <td>
+            <div class="delivery-container">
+                <div class="point-row">
+                    <input type="text" class="vehicle-input" placeholder="Delivery Airport">
+                    <button type="button" class="icon-btn" onclick="addDelivery(this)">+</button>
+                    <button type="button" class="icon-btn" onclick="removePoint(this)">−</button>
+                </div>
+            </div>
+        </td>
 
         <td><input class="vehicle-input" placeholder="Amount"></td>
+
+        <td style="text-align:center;">
+            <button class="remove-btn" onclick="removeVehicleRow(this)">Remove</button>
+        </td>
     `;
 
     tbody.appendChild(row);
 }
-function addPickup(type, id) {
-    const div = document.getElementById(`${type}-pickup-${id}`);
-    const input = document.createElement("input");
-    input.className = "vehicle-input";
-    input.placeholder = "Pickup Point";
-    div.appendChild(input);
-}
-
-function addDelivery(type, id) {
-    const div = document.getElementById(`${type}-delivery-${id}`);
-    const input = document.createElement("input");
-    input.className = "vehicle-input";
-    input.placeholder = "Delivery Point";
-    div.appendChild(input);
-}
-
         // ==================== FORM SUBMISSION ====================
         function submitForm() {
             const shipmentType = document.getElementById('shipmentType').value;
@@ -1760,10 +1796,9 @@ function addRow(type) {
     row.innerHTML = `
         <label style="min-width:100px;">Container Type</label>
 
-        <select style="padding:4px; font-size:13px;">
+            <select style="padding:4px; font-size:13px;">
             <option value="">Select Container Type</option>
-            <option>20 feet</option>
-           <option value="20GP">20 GP</option>
+            <option value="20GP">2 × 20 GP</option>
                         <option value="40GP">40 GP</option>
                         <option value="40HC">40 HC</option>
                         <option value="45HC">45 HC</option>
@@ -1922,6 +1957,9 @@ function openFastagPortal() {
 }
 
 
+function goBackDashboard(){
+    window.history.back();
+}
 
 </script>
 </body>

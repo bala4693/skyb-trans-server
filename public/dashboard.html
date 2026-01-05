@@ -16,6 +16,29 @@
     background: #f4f6f8;
     border-radius: 4px;
 }
+
+
+.dashboard-back-btn{
+    position: absolute;
+    bottom: 20px;
+    right: 30px;
+}
+
+.dashboard-back-btn button{
+    background-color: #ff9800;   /* ORANGE */
+    color: #fff;
+    border: none;
+    padding: 12px 26px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.dashboard-back-btn button:hover{
+    background-color: #e68900;
+}
 </style>
 <body>
  
@@ -29,14 +52,11 @@
         <button class="btn client" onclick="window.location.href='client creation.html'">Client Creation</button>
         <button class="btn vendor" onclick="window.location.href='vendor.html'">Vendor</button>
         <button class="btn vendor" onclick="window.location.href='vendor creation.html'">Vendor Creation</button>
+        <button class="menu-btn parivahan-btn" onclick="openMParivahan()"> mParivahan</button>
+        <button class="menu-btn fastag-btn" onclick="openFastagPortal()"> FASTag</button>
+
 </div>
 </div>
-
-
-<div class="top-bar">
-  <a href="login.html">Back to Login page</a>
-</div>
-
 
   <!-- Booking Headers -->
   <div class="booking-header">
@@ -44,31 +64,38 @@
     <div class="booking-pill import">FTL</div>
   </div>
 
+
 <!-- FCL + LCL COMMON CONTAINER -->
 <div class="booking-export-common">
 
   <div class="fcl-lcl-layout">
 
+
     <!-- LEFT : FCL -->
-    <div class="fcl-side" id="fclSection">
-    <h3 class="section-title">FCL – Available Containers</h3>
+     <div class="fcl-side" id="fclSection">
 
-  <div class="container-row">
-    <div class="container-card green">
-      <p class="title">20 ft Containers</p>
-      <p class="count">10</p>
+      <h3 class="section-title">FCL – Available Containers</h3> 
+
+        <div class="fcl-cards">
+            <!-- 20 ft -->
+            <div class="fcl-card green">
+                <p>20 ft Containers</p>
+                <strong>10</strong>
+            </div>
+
+            <!-- 40 ft -->
+            <div class="fcl-card blue">
+                <p>40 ft Containers</p>
+                <strong>1</strong>
+            </div>
+        </div>
     </div>
 
-    <div class="container-card blue">
-      <p class="title">40 ft Containers</p>
-      <p class="count">1</p>
-    </div>
-  </div>
-</div>
 
     <!-- RIGHT : LCL -->
     <div class="lcl-side">
 <div class="ftl-box">
+
   <h3 class="section-title">FTL – Truck Availability</h3>
 
   <div class="ftl-row">
@@ -98,16 +125,17 @@
     </select>
 
 
-    <input type="text" id="vehicle" placeholder="Vehicle Name" readonly />
+        <input type="text" id="vehicle" placeholder="Vehicle Name" readonly />
   </div>
 </div>
     </div>
-  </div>
 </div>
-    </div>
-    </div>
-  </div>
 </div>
+ <div class="dashboard-back-btn">
+    <button onclick="goBackDashboard()">⬅ Back</button>
+</div>
+
+
 <script>
 const truckData = [
   { weight: 1, length: 7, vehicle: "Tata Ace" },
@@ -131,7 +159,27 @@ function findVehicle() {
 
   vehicleInput.value = match ? match.vehicle : "Not Available";
 }
+
+
+function openMParivahan(){
+    window.open(
+      "https://parivahan.gov.in/parivahan/",
+      "_blank"
+    );
+}
+
+function openFastagPortal(){
+    window.open(
+      "https://fastag.ihmcl.com/",
+      "_blank"
+    );
+}
+
+function goBackDashboard(){
+    window.history.back();
+}
 </script>
 
 </body>
 </html>
+
