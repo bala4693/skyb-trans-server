@@ -73,22 +73,23 @@
 
     <!-- LEFT : FCL -->
      <div class="fcl-side" id="fclSection">
+      
+      <h3 class="section-title">FCL – Available Containers</h3>
 
-      <h3 class="section-title">FCL – Available Containers</h3> 
-
-        <div class="fcl-cards">
-            <!-- 20 ft -->
-            <div class="fcl-card green">
-                <p>20 ft Containers</p>
-                <strong>10</strong>
-            </div>
-
-            <!-- 40 ft -->
-            <div class="fcl-card blue">
-                <p>40 ft Containers</p>
-                <strong>1</strong>
-            </div>
-        </div>
+      
+    <div class="fcl-cards">
+    <div class="card import">
+    <h4>Import</h4>
+    <p>Available 20 ft Containers</p>
+    <strong>10</strong>
+  </div>
+  
+  <div class="card export">
+    <h4>Export</h4>
+    <p>Available 40 ft Containers</p>
+    <strong>1</strong>
+  </div>
+      </div>
     </div>
 
 
@@ -161,6 +162,17 @@ function findVehicle() {
 }
 
 
+function loadContainers() {
+    document.getElementById("container20").innerText =
+        localStorage.getItem("container20") || 0;
+
+    document.getElementById("container40").innerText =
+        localStorage.getItem("container40") || 0;
+}
+
+loadContainers();
+setInterval(loadContainers, 1000);
+
 function openMParivahan(){
     window.open(
       "https://parivahan.gov.in/parivahan/",
@@ -178,8 +190,14 @@ function openFastagPortal(){
 function goBackDashboard(){
     window.history.back();
 }
-</script>
 
+document.addEventListener("DOMContentLoaded", function () {
+  const count = localStorage.getItem("availableContainers") || 0;
+  document.getElementById("containerCount").innerText = count;
+});
+
+
+</script>
 </body>
 </html>
 

@@ -664,7 +664,6 @@
                 </ul>
             </div>
 
-            <h3 class="subsection-heading">Container Details</h3>
 
             <div class="form-grid">
                 <div class="form-field sales-person-field">
@@ -678,6 +677,7 @@
                         onfocus="searchSalesPerson('fcl')">
                     <div id="fclSuggestionsBox" class="suggestions-box"></div>
                 </div>
+            
 
                 <div class="form-field"></div>
                <div id="fclRows"></div>
@@ -698,19 +698,18 @@
     </select>
 </div>
 
-
-                <div class="form-field">
-                    <label>No. of Containers</label>
-                    <input type="number" id="noOfContainers" placeholder="ex: 1">
-
-                </div>
-
-                <div class="form-field">
-                    <label>Rate Per Container (₹)</label>
-                    <input type="number" id="ratePerContainer" placeholder="Enter Rate">
-                </div>
-            </div>
-
+        <div class="form-field">
+            <label>No. of Containers</label>
+            <input type="number" id="noOfContainers" placeholder="No .of Containers" min="1">
+        </div>
+        
+        
+        <div class="form-field">
+            <label>Rate Per Container (₹)</label>
+            <input type="number" id="ratePerContainer" placeholder="Enter Rate">
+        </div>
+    </div>
+    
             <!-- FCL Vehicle Entry -->
             <h3 class="subsection-heading">Vehicle Details Entry</h3>
             
@@ -732,240 +731,188 @@
                             <th style="width: 100px; text-align: center;">Action</th>
                         </tr>
                     </thead>
-                    <tbody id="fclVehicleTableBody">
-                        <!-- Vehicle rows will be added here -->
-                    </tbody>
-                </table>
+            <tbody id="fclVehicleTableBody"></tbody>
+        </table>
 
-                <div class="vehicle-count-box">
-                    Total Vehicles: <span class="count-number" id="fclVehicleCount">0</span>
-                </div>
-            </div>
+        <div class="vehicle-count-box">
+            Total Vehicles: <span class="count-number" id="fclVehicleCount">0</span>
         </div>
+        </div>
+    </div>
 
-        <!-- ==================== FCL PNR SECTION ==================== -->
-          <div id="fclPnrSection" class="section">
+    <!-- ==================== FCL PNR SECTION ==================== -->
+<div id="fclPnrSection" class="section">
 
-         <h2 class="section-heading">FCL - PNR</h2>
+  <h2 class="section-heading">FCL - PNR</h2>
 
-         <div class="info-box">
-        <h4>FCL - PNR Information</h4>
+  <div class="info-box">
+    <h4>FCL - PNR Information</h4>
+    <ul>
+      <li><strong>FCL-PNR:</strong> Full Container Load – PNR Based</li>
+      <li><strong>CBM:</strong> Cubic meter, is the freight volume</li>
+      <li><strong>MT:</strong> Metric Ton (1000 KG)</li>
+    </ul>
+  </div>
+
+  <!-- ===== FCL PNR : SALES PERSON SEARCH ===== -->
+  <div class="form-grid">
+    <div class="form-field sales-person-field">
+      <label>Sales Person <span style="color: red;">*</span></label>
+      <input 
+        type="text" 
+        id="fclPnrSalesPerson" 
+        placeholder="Type to search sales person" 
+        autocomplete="off"
+        oninput="searchSalesPerson('fclPnr')"
+        onfocus="searchSalesPerson('fclPnr')">
+      <div id="fclPnrSuggestionsBox" class="suggestions-box"></div>
+    </div>
+
+    <div class="form-field"></div>
+    <div id="fclPnrRows"></div>
+
+    <div class="form-field">
+      <label>Currency</label>
+      <select class="currencySelect">
+        <option value="INR">INR – ₹ Indian Rupee</option>
+        <option value="USD">USD – $ US Dollar</option>
+        <option value="EUR">EUR – € Euro</option>
+        <option value="GBP">GBP – £ British Pound</option>
+        <option value="AED">AED – د.إ UAE Dirham</option>
+        <option value="SAR">SAR – ﷼ Saudi Riyal</option>
+        <option value="JPY">JPY – ¥ Japanese Yen</option>
+        <option value="CNY">CNY – ¥ Chinese Yuan</option>
+        <option value="AUD">AUD – $ Australian Dollar</option>
+        <option value="CAD">CAD – $ Canadian Dollar</option>
+      </select>
+    </div>
+
+
+    <div class="form-field">
+      <label>No of Containers</label>
+      <input type="number" id="noOfContainers" min="1">
+    </div>
+  
+
+    <div class="form-field">
+      <label>Rate Per Container (₹)</label>
+      <input type="number" placeholder="Enter Rate">
+    </div>
+  </div>
+
+  <h3 class="subsection-heading">FCL PNR Details Entry</h3>
+  <button type="button" onclick="addFclPnrRow()">➕ Add PNR</button>
+
+  <table class="fcl-table">
+    <thead>
+      <tr>
+        <th>S.No</th>
+        <th>Vessel<br>Name</th>
+        <th>Voyage<br>No</th>
+        <th>IGM<br>No</th>
+        <th>IGM<br>Date</th>
+        <th>Line<br>No</th>
+        <th>Port of<br>Discharge</th>
+        <th>Container<br>Type</th>
+        <th>Container<br>No</th>
+        <th>DPD /<br>CFS</th>
+        <th>CFS<br>Name</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="fclPnrBody"></tbody>
+  </table>
+</div>
+    
+
+
+<!-- ==================== SEA LCL SECTION ==================== -->
+<div id="seaLclSection" class="section">
+    <h2 class="section-heading">Sea Shipment - LCL (Less Container Load)</h2>
+
+    <div class="info-box">
+        <h4>LCL Information & CBM Calculation</h4>
         <ul>
-            <li><strong>FCL-PNR:</strong> Full Container Load – PNR Based</li>
-            <li><strong>CBM:</strong> Cubic meter, is the freight volume</li>
-            <li><strong>MT:</strong> Metric Ton (1000 KG)</li>
+            <li><strong>LCL:</strong> Less Container Load</li>
+            <li><strong>CBM:</strong> Cubic meter, is the freight volume of the shipment</li>
+        </ul>
+        <p style="margin-top: 10px;"><strong>CBM Calculation Formula:</strong></p>
+        <ul>
+            <li>Centimeters (cm): (L × W × H) / 1,000,000 = m³</li>
+            <li>Millimeters (mm): (L × W × H) / 1,000,000,000 = m³</li>
+            <li>Inches: (L × W × H) / 61,023.7 = m³</li>
         </ul>
     </div>
 
-    <h3 class="subsection-heading">Container Details</h3>
-
-   <!-- ===== FCL PNR : SALES PERSON SEARCH ===== -->
-       
-            <div class="form-grid">
-                <div class="form-field sales-person-field">
-                    <label>Sales Person <span style="color: red;">*</span></label>
-                    <input 
-                        type="text" 
-                        id="fcl pnrSalesPerson" 
-                        placeholder="Type to search sales person" 
-                        autocomplete="off"
-                        oninput="searchSalesPerson('fcl pnr')"
-                        onfocus="searchSalesPerson('fcl pnr')">
-                    <div id="fcl pnrSuggestionsBox" class="suggestions-box"></div>
-                </div>
-
-        
-                <div class="form-field"></div>
-                 <div id="fclpnrRows"></div>
-
-       <div class="form-field">
-    <label>Currency</label>
-    <select class="currencySelect">
-        <option value="INR">INR – ₹ Indian Rupee</option>
-        <option value="USD">USD – $ US Dollar</option>
-        <option value="EUR">EUR – € Euro</option>
-        <option value="GBP">GBP – £ British Pound</option>
-        <option value="AED">AED – د.إ UAE Dirham</option>
-        <option value="SAR">SAR – ﷼ Saudi Riyal</option>
-        <option value="JPY">JPY – ¥ Japanese Yen</option>
-        <option value="CNY">CNY – ¥ Chinese Yuan</option>
-        <option value="AUD">AUD – $ Australian Dollar</option>
-        <option value="CAD">CAD – $ Canadian Dollar</option>
-    </select>
-</div>
-
+    <div class="form-grid">
         <div class="form-field">
-            <label>No. of Containers</label>
-            <input type="number" placeholder="ex: 1">
+            <label>Measurement Type</label>
+            <select id="lclMeasurementType" onchange="calculateCBM()">
+                <option value="cm">Centimeters (cm)</option>
+                <option value="mm">Millimeters (mm)</option>
+                <option value="inch">Inches</option>
+            </select>
         </div>
 
         <div class="form-field">
-            <label>Rate Per Container (₹)</label>
-            <input type="number" placeholder="Enter Rate">
+      <label>No. of Containers</label>
+      <input type="number" placeholder="ex: 1">
+    </div>
+
+    
+        <div class="form-field">
+            <label>Rate per CBM (₹)</label>
+            <input type="number" id="lclRate" placeholder="Enter Rate per CBM" oninput="calculateCBM()">
         </div>
     </div>
 
-    <h3 class="subsection-heading">FCL PNR Details Entry</h3>
-
-    
-        <button type="button" onclick="addFclRow()" class="add-row-btn">
-        ➕ Add Row
-    </button>
-
-    <table class="fcl-table">
-        <thead>
-            <tr>
-                <th>S.No</th>
-                <th>Vessel<br>Name</th>
-                <th>Voyage<br>No</th>
-                <th>IGM<br>No</th>
-                <th>IGM<br>Date</th>
-                <th>Line<br>No</th>
-                <th>Port of<br>Discharge</th>
-                <th>Container<br>Type</th>
-                <th>Container<br>No</th>
-                <th>DPD /<br>CFS</th>
-                <th>CFS<br>Name</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-
-        <tbody id="fclPnrBody"></tbody>
-    </table>
-</div>
-
-        <!-- ==================== SEA LCL SECTION ==================== -->
-        <div id="seaLclSection" class="section">
-            <h2 class="section-heading">Sea Shipment - LCL (Less Container Load)</h2>
-
-            <div class="info-box">
-                <h4>LCL Information & CBM Calculation</h4>
-                <ul>
-                    <li><strong>LCL:</strong> Less Container Load</li>
-                    <li><strong>CBM:</strong> Cubic meter, is the freight volume of the shipment</li>
-                </ul>
-                <p style="margin-top: 10px;"><strong>CBM Calculation Formula:</strong></p>
-                <ul>
-                    <li>Centimeters (cm): (L × W × H) / 1,000,000 = m³</li>
-                    <li>Millimeters (mm): (L × W × H) / 1,000,000,000 = m³</li>
-                    <li>Inches: (L × W × H) / 61,023.7 = m³</li>
-                </ul>
-            </div>
-
-            <div class="form-grid">
-                <div class="form-field sales-person-field">
-                    <label>Sales Person <span style="color: red;">*</span></label>
-                    <input 
-                        type="text" 
-                        id="lclSalesPerson" 
-                        placeholder="Type to search sales person" 
-                        autocomplete="off"
-                        oninput="searchSalesPerson('lcl')"
-                        onfocus="searchSalesPerson('lcl')">
-                    <div id="lclSuggestionsBox" class="suggestions-box"></div>
-                </div>
-
-                <div class="form-field"></div>
-                <div id="lclRows"></div>
-
-
-              <div class="form-field">
-    <label>Currency</label>
-    <select class="currencySelect">
-        <option value="INR">INR – ₹ Indian Rupee</option>
-        <option value="USD">USD – $ US Dollar</option>
-        <option value="EUR">EUR – € Euro</option>
-        <option value="GBP">GBP – £ British Pound</option>
-        <option value="AED">AED – د.إ UAE Dirham</option>
-        <option value="SAR">SAR – ﷼ Saudi Riyal</option>
-        <option value="JPY">JPY – ¥ Japanese Yen</option>
-        <option value="CNY">CNY – ¥ Chinese Yuan</option>
-        <option value="AUD">AUD – $ Australian Dollar</option>
-        <option value="CAD">CAD – $ Canadian Dollar</option>
-    </select>
-</div>
-                    
-                <div class="form-field">
-                    <label>No. of Packages</label>
-                    <input type="number" id="lclNoOfPackages" placeholder="Enter Number of Packages" oninput="calculateLCLTotalCBM()">
-                </div>
-
-                <div class="form-field">
-                    <label>Measurement Type</label>
-                    <select id="lclMeasurementType" onchange="updateLCLUnits(); calculateCBM();">
-                        <option value="cm">Centimeters (cm)</option>
-                        <option value="mm">Millimeters (mm)</option>
-                        <option value="inch">Inches</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-grid">
-                <div class="form-field">
-                    <label>Length <span id="lclLengthUnit">(cm)</span></label>
-                    <input type="number" step="0.01" id="lclLength" placeholder="Enter Length" oninput="calculateCBM()">
-                </div>
-
-                <div class="form-field">
-                    <label>Breadth/Width <span id="lclWidthUnit">(cm)</span></label>
-                    <input type="number" step="0.01" id="lclWidth" placeholder="Enter Breadth" oninput="calculateCBM()">
-                </div>
-
-                <div class="form-field">
-                    <label>Height <span id="lclHeightUnit">(cm)</span></label>
-                    <input type="number" step="0.01" id="lclHeight" placeholder="Enter Height" oninput="calculateCBM()">
-                </div>
-            </div>
-
-            <div class="form-grid">
-                <div class="form-field">
-                    <label>CBM per Piece (m³)</label>
-                    <input type="number" step="0.001" id="cbmPerPiece" readonly>
-                </div>
-
-                <div class="form-field">
-                    <label>Total No. of CBM (m³)</label>
-                    <input type="number" step="0.001" id="totalCBM" readonly>
-                </div>
-
-                <div class="form-field">
-                    <!-- Empty space -->
-                </div>
-            </div>
-
-            <!-- LCL Vehicle Entry -->
-            <h3 class="subsection-heading">Vehicle Details Entry</h3>
-            
-            <button type="button" class="add-vehicle-btn" onclick="addLclVehicleRow()">
-                ➕ Add Vehicle
-            </button>
-
-            <div style="width: 100%; overflow-x: auto;">
-                <table>
-                    <thead>
-                        <tr>
-                            <th style="width: 60px;">S.No</th>
-                            <th style="width: 150px;">Vehicle Number</th>
-                            <th style="width: 120px;">Weight Capacity</th>
-                            <th style="width: 120px;">Truck Length</th>
-                            <th style="width: 180px;">Pickup Point</th>
-                            <th style="width: 180px;">Delivery Point</th>
-                            <th style="width: 120px;">Total Amount (₹)</th>
-                            <th style="width: 100px; text-align: center;">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="lclVehicleTableBody">
-                        <!-- Vehicle rows will be added here -->
-                    </tbody>
-                </table>
-
-                <div class="vehicle-count-box">
-                    Total Vehicles: <span class="count-number" id="lclVehicleCount">0</span>
-                </div>
-            </div>
+      
+        <div class="form-field">
+            <label>Length</label>
+            <input type="number" id="lclLength" placeholder="Enter Length" oninput="calculateCBM()">
         </div>
 
+        <div class="form-field">
+            <label>Breadth</label>
+            <input type="number" id="lclWidth" placeholder="Enter Breadth" oninput="calculateCBM()">
+        </div>
+
+        <div class="form-field">
+            <label>Height</label>
+            <input type="number" id="lclHeight" placeholder="Enter Height" oninput="calculateCBM()">
+        </div>
+
+
+    <!-- LCL Vehicle Entry -->
+
+    <h3 class="subsection-heading">Vehicle Details Entry</h3>
+
+    <button type="button" class="add-vehicle-btn" onclick="addLclVehicleRow()">➕ Add Vehicle</button>
+
+    <div style="width: 100%; overflow-x: auto;">
+        <table>
+            <thead>
+                <tr>
+                    <th>S.No</th>
+                    <th>Vehicle Number</th>
+                    <th>Weight Capacity</th>
+                    <th>Truck Length</th>
+                    <th>Pickup Point</th>
+                    <th>Delivery Point</th>
+                    <th>Total Amount (₹)</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="lclVehicleTableBody"></tbody>
+        </table>
+        <div class="vehicle-count-box">
+            Total Vehicles: <span class="count-number" id="lclVehicleCount">0</span>
+        </div>
+    </div>
+</div>
+        
         <!-- ==================== AIR SECTION ==================== -->
+
         <div id="airSection" class="section">
             <h2 class="section-heading">Air Shipment</h2>
 
@@ -1204,10 +1151,9 @@
         <button type="button" class="submit-btn" onclick="submitForm()">Submit Vendor Data</button>
     </div>
 
-    <div class="dashboard-back-btn">
+     <div class="dashboard-back-btn">
     <button onclick="goBackDashboard()">⬅ Back</button>
 </div>
-
 
     <script>
         // ==================== SALES PERSON DATA ====================
@@ -1478,246 +1424,479 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // ==================== FCL VEHICLE ENTRY ====================
+
 let fclVehicleCounter = 0;
 
 function addFclVehicleRow() {
-    fclVehicleCounter++;
-    const tbody = document.getElementById('fclVehicleTableBody');
-    const row = document.createElement('tr');
 
-    row.innerHTML = `
-        <td>${fclVehicleCounter}</td>
+  const containerInput = document.getElementById("noOfContainers");
+  const rateInput = document.getElementById("ratePerContainer");
 
-        <td><input class="vehicle-input" placeholder="Vehicle No"></td>
+  if (!containerInput || !rateInput) {
+    alert("Container or Rate input not found");
+    return;
+  }
 
-        <td>
-        <select class="vehicle-input">
-        <option value="1">1 Ton</option>
-      <option value="3">3 Ton</option>
-      <option value="5">5 Ton</option>
-      <option value="7">7 Ton</option>
-      <option value="9">9 Ton</option>
-      <option value="10">10 Ton</option>
-      <option value="22">22 Ton</option>
-      <option value="28">28 Ton</option>              
-    </select>
-</td>
+  const containers = Number(containerInput.value);
+  const rate = Number(rateInput.value);
 
-    <td>
-    <select class="vehicle-input">
-    <option value="7">7 ft</option>
-      <option value="12">12 ft</option>
-      <option value="16">16 ft</option>
-      <option value="18">18 ft</option>
-      <option value="20">20 ft</option>
-      <option value="24">24 ft</option>
-      <option value="32">32 ft</option>
-      <option value="40">40 ft</option>           
-    </select>
- </td>
- 
-        <td>
-            <div class="pickup-container">
-                <div class="point-row">
-                    <input type="text" class="vehicle-input" placeholder="Pickup Point">
-                    <button type="button" class="icon-btn" onclick="addPickup(this)">+</button>
-                    <button type="button" class="icon-btn" onclick="removePoint(this)">−</button>
-                </div>
-            </div>
-        </td>
+  if (containers <= 0 || rate <= 0) {
+    alert("Enter No of Containers and Rate first");
+    return;
+  }
 
-        <td>
-            <div class="delivery-container">
-                <div class="point-row">
-                    <input type="text" class="vehicle-input" placeholder="Delivery Point">
-                    <button type="button" class="icon-btn" onclick="addDelivery(this)">+</button>
-                    <button type="button" class="icon-btn" onclick="removePoint(this)">−</button>
-                </div>
-            </div>
-        </td>
+  const totalAmount = containers * rate;
 
-        <td><input class="vehicle-input" placeholder="Amount"></td>
+  fclVehicleCounter++;
 
-        <td style="text-align:center;">
-            <button class="remove-btn" onclick="removeVehicleRow(this)">Remove</button>
-        </td>
-    `;
+  const tbody = document.getElementById("fclVehicleTableBody");
 
-    tbody.appendChild(row);
-}
-function addPickup(btn) {
-    const container = btn.closest('.pickup-container');
+  if (!tbody) {
+    alert("FCL table body not found");
+    return;
+  }
 
-    const div = document.createElement('div');
-    div.className = 'point-row';
-    div.innerHTML = `
-        <input type="text" class="vehicle-input" placeholder="Pickup Point">
-        <button type="button" class="icon-btn" onclick="addPickup(this)">+</button>
-        <button type="button" class="icon-btn" onclick="removePoint(this)">−</button>
-    `;
-    container.appendChild(div);
-}
+  const row = document.createElement("tr");
 
-function addDelivery(btn) {
-    const container = btn.closest('.delivery-container');
+  row.innerHTML =
+    "<td>" + fclVehicleCounter + "</td>" +
 
-    const div = document.createElement('div');
-    div.className = 'point-row';
-    div.innerHTML = `
-        <input type="text" class="vehicle-input" placeholder="Delivery Point">
-        <button type="button" class="icon-btn" onclick="addDelivery(this)">+</button>
-        <button type="button" class="icon-btn" onclick="removePoint(this)">−</button>
-    `;
-    container.appendChild(div);
+    "<td>" +
+      "<input class='vehicle-input' placeholder='Vehicle Number'>" +
+    "</td>" +
+
+    // ✅ Weight Capacity Dropdown
+    "<td>" +
+      "<select class='vehicle-input'>" +
+        "<option value=''>-- Select --</option>" +
+        "<option value='1'>1 Ton</option>" +
+        "<option value='3'>3 Ton</option>" +
+        "<option value='5'>5 Ton</option>" +
+        "<option value='7'>7 Ton</option>" +
+        "<option value='9'>9 Ton</option>" +
+        "<option value='10'>10 Ton</option>" +
+        "<option value='22'>22 Ton</option>" +
+        "<option value='28'>28 Ton</option>" +
+      "</select>" +
+    "</td>" +
+
+    // ✅ Truck Length Dropdown
+    "<td>" +
+      "<select class='vehicle-input'>" +
+        "<option value=''>-- Select --</option>" +
+        "<option value='7'>7 ft</option>" +
+        "<option value='12'>12 ft</option>" +
+        "<option value='16'>16 ft</option>" +
+        "<option value='18'>18 ft</option>" +
+        "<option value='20'>20 ft</option>" +
+        "<option value='24'>24 ft</option>" +
+        "<option value='32'>32 ft</option>" +
+        "<option value='40'>40 ft</option>" +
+      "</select>" +
+    "</td>" +
+
+    "<td>" +
+      "<input class='vehicle-input' placeholder='Pickup Point'>" +
+    "</td>" +
+
+    "<td>" +
+      "<input class='vehicle-input' placeholder='Delivery Point'>" +
+    "</td>" +
+
+    "<td>" +
+      "<input class='vehicle-input' value='" + totalAmount + "' readonly>" +
+    "</td>" +
+
+    "<td style='text-align:center;'>" +
+      "<button class='remove-btn' onclick='this.closest(\"tr\").remove()'>Remove</button>" +
+    "</td>";
+
+  tbody.appendChild(row);
 }
 
-function removePoint(btn) {
-    const row = btn.closest('.point-row');
-    const container = row.parentElement;
+          <!-- ==================== FCL PNR SECTION ==================== -->
+          let fclPnrCount = 0;
 
-    if (container.children.length > 1) {
-        row.remove();
-    }
+function addFclPnrRow() {
+  fclPnrCount++;
+  const tableBody = document.getElementById("fclPnrBody");
+  const newRow = tableBody.insertRow();
+
+  newRow.innerHTML = `
+    <td>${fclPnrCount}</td>
+    <td><input type="text" placeholder="Vessel Name"></td>
+    <td><input type="text" placeholder="Voyage No"></td>
+    <td><input type="text" placeholder="IGM No"></td>
+    <td><input type="date"></td>
+    <td><input type="text" placeholder="Line No"></td>
+    <td><input type="text" placeholder="Port of Discharge"></td>
+    <td><input type="text" placeholder="Container Type"></td>
+    <td><input type="text" placeholder="Container No"></td>
+    <td><input type="text" placeholder="DPD / CFS"></td>
+    <td><input type="text" placeholder="CFS Name"></td>
+    <td style="text-align:center;">
+      <button type="button" onclick="removeFclPnrRow(this)">Remove ❌</button>
+    </td>
+  `;
 }
 
-function removeVehicleRow(btn) {
-    btn.closest('tr').remove();
+function removeFclPnrRow(button) {
+  button.closest("tr").remove();
+  fclPnrCount--;
+
+  // Re-number rows
+  const rows = document.querySelectorAll("#fclPnrBody tr");
+  rows.forEach((row, index) => {
+    row.cells[0].innerText = index + 1;
+  });
 }
+
 
         // ==================== LCL VEHICLE ENTRY ====================
 
-let lclVehicleCounter = 0;
+let lclVehicleCount = 0;
+
+function calculateCBM() {
+  const length = parseFloat(document.getElementById("lclLength")?.value);
+  const width = parseFloat(document.getElementById("lclWidth")?.value);
+  const height = parseFloat(document.getElementById("lclHeight")?.value);
+  const rate = parseFloat(document.getElementById("lclRate")?.value);
+  const unit = document.getElementById("lclMeasurementType")?.value;
+
+  if (isNaN(length) || isNaN(width) || isNaN(height) || isNaN(rate) || !unit) return null;
+
+  let cbm = 0;
+  if (unit === "cm") cbm = (length * width * height) / 1_000_000;
+  else if (unit === "mm") cbm = (length * width * height) / 1_000_000_000;
+  else if (unit === "inch") cbm = (length * width * height) / 61_023.7;
+
+  return { cbm, totalAmount: cbm * rate };
+}
 
 function addLclVehicleRow() {
-    lclVehicleCounter++;
-    const tbody = document.getElementById('lclVehicleTableBody');
-    const row = document.createElement('tr');
+  const result = calculateCBM();
+  if (!result) {
+    alert("Please enter valid Measurement Type, Length, Width, Height, and Rate per CBM.");
+    return;
+  }
 
-    row.innerHTML = `
-        <td>${lclVehicleCounter}</td>
-         <td><input class="vehicle-input" placeholder="Vehicle No"></td>
+  const { totalAmount } = result;
+  const tableBody = document.getElementById("lclVehicleTableBody");
+  const countEl = document.getElementById("lclVehicleCount");
+  if (!tableBody || !countEl) return;
 
-<td>
-    <select class="vehicle-input">
-    <option value="1">1 Ton</option>
-      <option value="3">3 Ton</option>
-      <option value="5">5 Ton</option>
-      <option value="7">7 Ton</option>
-      <option value="9">9 Ton</option>
-      <option value="10">10 Ton</option>
-      <option value="22">22 Ton</option>
-      <option value="28">28 Ton</option>         
-    </select>
-</td>
+  lclVehicleCount++;
+  countEl.innerText = lclVehicleCount;
 
+  const newRow = tableBody.insertRow();
+  newRow.innerHTML = `
+    <td>${lclVehicleCount}</td>
+    <td><input type="text" placeholder="Vehicle Number"></td>
+
+    <!-- Weight Capacity -->
     <td>
-    <select class="vehicle-input">
-    <option value="7">7 ft</option>
-      <option value="12">12 ft</option>
-      <option value="16">16 ft</option>
-      <option value="18">18 ft</option>
-      <option value="20">20 ft</option>
-      <option value="24">24 ft</option>
-      <option value="32">32 ft</option>
-      <option value="40">40 ft</option>       
-     </select>
-</td> 
-<td>
-            <div class="pickup-container">
-                <div class="point-row">
-                    <input type="text" class="vehicle-input" placeholder="Pickup Point">
-                    <button type="button" class="icon-btn" onclick="addPickup(this)">+</button>
-                    <button type="button" class="icon-btn" onclick="removePoint(this)">−</button>
-                </div>
-            </div>
-        </td>
+      <select class="vehicle-input">
+        <option value="">-- Select --</option>
+        <option value="1">1 Ton</option>
+        <option value="3">3 Ton</option>
+        <option value="5">5 Ton</option>
+        <option value="7">7 Ton</option>
+        <option value="9">9 Ton</option>
+        <option value="10">10 Ton</option>
+        <option value="22">22 Ton</option>
+        <option value="28">28 Ton</option>
+      </select>
+    </td>
 
-        <td>
-            <div class="delivery-container">
-                <div class="point-row">
-                    <input type="text" class="vehicle-input" placeholder="Delivery Point">
-                    <button type="button" class="icon-btn" onclick="addDelivery(this)">+</button>
-                    <button type="button" class="icon-btn" onclick="removePoint(this)">−</button>
-                </div>
-            </div>
-        </td>
+    <!-- Truck Length -->
+    <td>
+      <select class="vehicle-input">
+        <option value="">-- Select --</option>
+        <option value="7">7 ft</option>
+        <option value="12">12 ft</option>
+        <option value="16">16 ft</option>
+        <option value="18">18 ft</option>
+        <option value="20">20 ft</option>
+        <option value="24">24 ft</option>
+        <option value="32">32 ft</option>
+        <option value="40">40 ft</option>
+      </select>
+    </td>
 
-        <td><input class="vehicle-input" placeholder="Amount"></td>
+    <!-- Pickup -->
+    <td class="pickup-cell">
+      <div class="pickup-wrapper">
+        <input type="text" placeholder="Pickup Point">
+        <button type="button" class="btn-add-pickup">➕</button>
+        <button type="button" class="btn-remove-field">❌</button>
+      </div>
+    </td>
 
-        <td style="text-align:center;">
-            <button class="remove-btn" onclick="removeVehicleRow(this)">Remove</button>
-        </td>
-    `;
+    <!-- Delivery -->
+    <td class="delivery-cell">
+      <div class="delivery-wrapper">
+        <input type="text" placeholder="Delivery Point">
+        <button type="button" class="btn-add-delivery">➕</button>
+        <button type="button" class="btn-remove-field">❌</button>
+      </div>
+    </td>
 
-    tbody.appendChild(row);
+    <td>₹${Number.isFinite(totalAmount) ? totalAmount.toFixed(2) : "0.00"}</td>
+    <td style="text-align:center;">
+      <button type="button" class="btn-remove-row">Remove ❌</button>
+    </td>
+  `;
 }
-        // ==================== AIR VEHICLE ENTRY ====================
-  
-let air = 0;
 
+// Event delegation for LCL table
+document.addEventListener("DOMContentLoaded", () => {
+  const tableBody = document.getElementById("lclVehicleTableBody");
+  if (!tableBody) return;
+
+  tableBody.addEventListener("click", (e) => {
+    const target = e.target;
+
+    // Add pickup field
+    if (target.classList.contains("btn-add-pickup")) {
+      const cell = target.closest("td");
+      const block = document.createElement("div");
+      block.className = "pickup-wrapper";
+      block.innerHTML = `
+        <input type="text" placeholder="Pickup Point">
+        <button type="button" class="btn-add-pickup">➕</button>
+        <button type="button" class="btn-remove-field">❌</button>
+      `;
+      cell.appendChild(block);
+    }
+
+    // Add delivery field
+    if (target.classList.contains("btn-add-delivery")) {
+      const cell = target.closest("td");
+      const block = document.createElement("div");
+      block.className = "delivery-wrapper";
+      block.innerHTML = `
+        <input type="text" placeholder="Delivery Point">
+        <button type="button" class="btn-add-delivery">➕</button>
+        <button type="button" class="btn-remove-field">❌</button>
+      `;
+      cell.appendChild(block);
+    }
+
+    // Remove pickup/delivery field
+    if (target.classList.contains("btn-remove-field")) {
+      const wrapper = target.parentElement;
+      wrapper?.remove();
+    }
+
+    // Remove entire row
+    if (target.classList.contains("btn-remove-row")) {
+      const row = target.closest("tr");
+      row?.remove();
+      lclVehicleCount = Math.max(0, lclVehicleCount - 1);
+      const countEl = document.getElementById("lclVehicleCount");
+      if (countEl) countEl.innerText = lclVehicleCount;
+
+      // re-number S.No
+      const rows = document.querySelectorAll("#lclVehicleTableBody tr");
+      rows.forEach((r, idx) => r.cells[0].innerText = idx + 1);
+    }
+  });
+});
+
+            // ==================== AIR VEHICLE ENTRY ====================
+
+/* ===============================
+   GLOBAL VARIABLES
+================================ */
+let airVehicleCounter = 0;
+
+/* ===============================
+   SHOW MEASUREMENT SECTION
+================================ */
+function showAirMeasurement() {
+  document.getElementById("airCmSection").style.display = "none";
+  document.getElementById("airMmSection").style.display = "none";
+  document.getElementById("airInchSection").style.display = "none";
+
+  const type = document.getElementById("airMeasurementType").value;
+
+  if (type === "cm") document.getElementById("airCmSection").style.display = "block";
+  if (type === "mm") document.getElementById("airMmSection").style.display = "block";
+  if (type === "inch") document.getElementById("airInchSection").style.display = "block";
+}
+
+/* ===============================
+   FINAL TOTAL (COMMON)
+================================ */
+function getAirFinalTotal() {
+  const type = document.getElementById("airMeasurementType").value;
+
+  if (type === "cm") return Number(document.getElementById("airCmTotal").value) || 0;
+  if (type === "mm") return Number(document.getElementById("airMmTotal").value) || 0;
+  if (type === "inch") return Number(document.getElementById("airInchTotal").value) || 0;
+
+  return 0;
+}
+
+/* ===============================
+   UPDATE VEHICLE TOTALS (🔥 FIX)
+================================ */
+function updateAirVehicleTotals() {
+  const total = getAirFinalTotal();
+  if (total <= 0) return;
+
+  document.querySelectorAll(".air-total-cell").forEach(cell => {
+    cell.innerText = "₹ " + total.toFixed(2);
+  });
+}
+
+/* ===============================
+   CM CALCULATION
+================================ */
+function calculateAirCm() {
+  const L = Number(airCmLength.value);
+  const W = Number(airCmWidth.value);
+  const H = Number(airCmHeight.value);
+  const rate = Number(airCmRate.value);
+  const actual = Number(airActualWeight.value);
+
+  if (!L || !W || !H) return;
+
+  const volumetric = (L * W * H) / 6000;
+  const chargeable = Math.max(actual, volumetric);
+  const total = chargeable * rate;
+
+  airCmVolumetric.value = volumetric.toFixed(2);
+  airCmChargeable.value = chargeable.toFixed(2);
+  airCmTotal.value = total.toFixed(2);
+
+  updateAirVehicleTotals();
+}
+
+/* ===============================
+   MM CALCULATION (✔ FIXED)
+   Formula: (L×W×H)/6000000
+================================ */
+function calculateAirMm() {
+  const L = Number(airMmLength.value);
+  const W = Number(airMmWidth.value);
+  const H = Number(airMmHeight.value);
+  const rate = Number(airMmRate.value);
+  const actual = Number(airActualWeight.value);
+
+  if (!L || !W || !H) return;
+
+  const volumetric = (L * W * H) / 6000000;
+  const chargeable = Math.max(actual, volumetric);
+  const total = chargeable * rate;
+
+  airMmVolumetric.value = volumetric.toFixed(2);
+  airMmChargeable.value = chargeable.toFixed(2);
+  airMmTotal.value = total.toFixed(2);
+
+  updateAirVehicleTotals();
+}
+
+/* ===============================
+   INCH CALCULATION
+================================ */
+function calculateAirInch() {
+  const L = Number(airInchLength.value);
+  const W = Number(airInchWidth.value);
+  const H = Number(airInchHeight.value);
+  const rate = Number(airInchRate.value);
+  const actual = Number(airActualWeight.value);
+
+  if (!L || !W || !H) return;
+
+  const volumetric = (L * W * H) / 366;
+  const chargeable = Math.max(actual, volumetric);
+  const total = chargeable * rate;
+
+  airInchVolumetric.value = volumetric.toFixed(2);
+  airInchChargeable.value = chargeable.toFixed(2);
+  airInchTotal.value = total.toFixed(2);
+
+  updateAirVehicleTotals();
+}
+
+/* ===============================
+   ADD VEHICLE ROW
+================================ */
 function addAirVehicleRow() {
-    air++;
-    const tbody = document.getElementById('airVehicleTableBody');
-    const row = document.createElement('tr');
+  const totalAmount = getAirFinalTotal();
+  if (totalAmount <= 0) {
+    alert("Please calculate Air shipment first");
+    return;
+  }
 
-    row.innerHTML = `
-        <td>${air}</td> 
-         <td><input class="vehicle-input" placeholder="Vehicle No"></td>
+  airVehicleCounter++;
+  document.getElementById("airVehicleCount").innerText = airVehicleCounter;
 
-    <td>
-     <select class="vehicle-input">
-     <option value="1">1 Ton</option>
-      <option value="3">3 Ton</option>
-      <option value="5">5 Ton</option>
-      <option value="7">7 Ton</option>
-      <option value="9">9 Ton</option>
-      <option value="10">10 Ton</option>
-      <option value="22">22 Ton</option>
-      <option value="28">28 Ton</option>
-   </select>
-</td>
+  const tbody = document.getElementById("airVehicleTableBody");
+  const row = document.createElement("tr");
+
+  row.innerHTML = `
+    <td>${airVehicleCounter}</td>
+
+    <td><input class="vehicle-input" placeholder="Vehicle Number"></td>
 
     <td>
-     <select class="vehicle-input">
-     <option value="7">7 ft</option>
-      <option value="12">12 ft</option>
-      <option value="16">16 ft</option>
-      <option value="18">18 ft</option>
-      <option value="20">20 ft</option>
-      <option value="24">24 ft</option>
-      <option value="32">32 ft</option>
-      <option value="40">40 ft</option>
-    </select>
-</td>
- <td>
-            <div class="pickup-container">
-                <div class="point-row">
-                    <input type="text" class="vehicle-input" placeholder="Pickup Airport">
-                    <button type="button" class="icon-btn" onclick="addPickup(this)">+</button>
-                    <button type="button" class="icon-btn" onclick="removePoint(this)">−</button>
-                </div>
-            </div>
-        </td>
+      <select class="vehicle-input">
+        <option value="">-- Select --</option>
+        <option value="1">1 Ton</option>
+        <option value="3">3 Ton</option>
+        <option value="5">5 Ton</option>
+        <option value="7">7 Ton</option>
+        <option value="9">9 Ton</option>
+        <option value="10">10 Ton</option>
+        <option value="22">22 Ton</option>
+        <option value="28">28 Ton</option>
+      </select>
+    </td>
 
-        <td>
-            <div class="delivery-container">
-                <div class="point-row">
-                    <input type="text" class="vehicle-input" placeholder="Delivery Airport">
-                    <button type="button" class="icon-btn" onclick="addDelivery(this)">+</button>
-                    <button type="button" class="icon-btn" onclick="removePoint(this)">−</button>
-                </div>
-            </div>
-        </td>
+    <td>
+      <select class="vehicle-input">
+        <option value="">-- Select --</option>
+        <option value="7">7 ft</option>
+        <option value="12">12 ft</option>
+        <option value="16">16 ft</option>
+        <option value="18">18 ft</option>
+        <option value="20">20 ft</option>
+        <option value="24">24 ft</option>
+        <option value="32">32 ft</option>
+        <option value="40">40 ft</option>
+      </select>
+    </td>
 
-        <td><input class="vehicle-input" placeholder="Amount"></td>
+    <td class="pickup-cell">
+      <div class="pickup-wrapper">
+        <input placeholder="Pickup Point">
+        <button type="button">➕</button>
+        <button type="button">❌</button>
+      </div>
+    </td>
 
-        <td style="text-align:center;">
-            <button class="remove-btn" onclick="removeVehicleRow(this)">Remove</button>
-        </td>
-    `;
+    <td class="delivery-cell">
+      <div class="delivery-wrapper">
+        <input placeholder="Delivery Point">
+        <button type="button">➕</button>
+        <button type="button">❌</button>
+      </div>
+    </td>
 
-    tbody.appendChild(row);
+    <td class="air-total-cell">₹ ${totalAmount.toFixed(2)}</td>
+
+    <td style="text-align:center;">
+      <button onclick="this.closest('tr').remove()">Remove ❌</button>
+    </td>
+  `;
+
+  tbody.appendChild(row);
 }
+
+
+
         // ==================== FORM SUBMISSION ====================
         function submitForm() {
             const shipmentType = document.getElementById('shipmentType').value;
